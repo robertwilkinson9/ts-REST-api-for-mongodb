@@ -1,7 +1,3 @@
-{ /*
-const mongoose = require('mongoose')
-*/ }
-
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema
@@ -18,6 +14,3 @@ const Itemschema = new Schema(
 )
 
 export const Item = mongoose.model('Item', Itemschema, 'item');
-{ /*
-module.exports = Item
-*/ }

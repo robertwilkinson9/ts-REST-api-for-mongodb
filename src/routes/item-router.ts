@@ -8,5 +8,3 @@ itemRouter.put('/item/:id', updateItem)
 itemRouter.delete('/item/:id', deleteItem)
 itemRouter.get('/item/:id', getItemById)
 itemRouter.get('/items', getItems)
-
-//itemRouter = module.exports
