@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "npx tsx src/index.ts",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "cd tests && bash testuri.sh"
   },
   "dependencies": {
     "ts-node": "^10.9.1"

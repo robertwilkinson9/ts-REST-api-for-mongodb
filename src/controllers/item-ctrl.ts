@@ -105,8 +105,10 @@ export const getItems = async (req: Request, res: Response) => {
     const items = await Item.find( { } );
     console.log("items.length is ");
     console.log(items.length);
-    console.log("items[0].email is ");
-    console.log(items[0].email);
+    if (items.length) {
+      console.log("items[0].email is ");
+      console.log(items[0].email);
+    }
     if (items.length) {
         return res.status(200).json({ success: true, data: items })
     } else {

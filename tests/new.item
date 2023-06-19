@@ -1,0 +1,8 @@
+{
+  "booking_start":"2023-06-28T08:00:00Z",
+  "booking_end": "2023-06-28T17:00:00Z",
+  "expireAt": "2023-06-29:00:00Z",
+  "bucket" : 1,
+  "item" : "1f18",
+  "email" : "robert.wilkinson.work@proton.me"
+}

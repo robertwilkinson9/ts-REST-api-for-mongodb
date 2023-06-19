@@ -1,0 +1,17 @@
+robert@debian:~/src/typescript/ts-backend/tests$ mongo localhost:27017/test --eval 'db.test.insertOne({"data": "some stuff"})'
+MongoDB shell version v4.4.19
+connecting to: mongodb://localhost:27017/test?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("c856e629-1991-404a-bdd9-fb816547e5e1") }
+MongoDB server version: 4.4.19
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("64904c189f20d9693447a324")
+}
+robert@debian:~/src/typescript/ts-backend/tests$ mongo localhost:27017/test --eval 'db.test.find()'
+MongoDB shell version v4.4.19
+connecting to: mongodb://localhost:27017/test?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("6dfd528b-ec84-4163-9269-443475df5d2f") }
+MongoDB server version: 4.4.19
+{ "_id" : ObjectId("64904c189f20d9693447a324"), "data" : "some stuff" }
+robert@debian:~/src/typescript/ts-backend/tests$ 
+
