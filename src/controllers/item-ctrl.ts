@@ -16,7 +16,7 @@ export const createItem = (req: Request, res: Response) => {
     const item = new Item(body)
 
     if (!item) {
-        const err = "No item created frtom request";
+        const err = "No item created from request";
         return res.status(400).json({ success: false, error: err })
     }
 
@@ -43,9 +43,6 @@ const toObjectId = (st: string) => {return new Types.ObjectId(st);};
 export const updateItem = async (req: Request, res: Response) => {
     const body = req.body
 
-    console.log("body is ");
-    console.log(body);
-
     if (!body) {
         return res.status(400).json({
             success: false,
@@ -64,17 +61,10 @@ export const updateItem = async (req: Request, res: Response) => {
        console.log(err);
       });
 
-    if (mydata) {
-      console.log("mydata is ");
-      console.log(mydata);
-    }
-
     return res.status(200).json({ success: true, data: mydata })
 }
 
 export const deleteItem = async (req: Request, res: Response) => {
-   console.log("toDelete.id is ");
-   console.log(req.params.id);
    const toDelete = await Item.findOneAndDelete({ _id: req.params.id })
    if (!toDelete) {
      return res
@@ -86,11 +76,7 @@ export const deleteItem = async (req: Request, res: Response) => {
 }
 
 export const getItemById = async (req: Request, res: Response) => {
-    console.log("getItemById.id is ");
-    console.log(req.params.id);
     const item = await Item.findOne({ _id: req.params.id } )
-    console.log("getItemById.length is ");
-    console.log(getItemById.length);
 
     if (!item) {
       return res
@@ -103,12 +89,6 @@ export const getItemById = async (req: Request, res: Response) => {
 export const getItems = async (req: Request, res: Response) => {
   if (req) {
     const items = await Item.find( { } );
-    console.log("items.length is ");
-    console.log(items.length);
-    if (items.length) {
-      console.log("items[0].email is ");
-      console.log(items[0].email);
-    }
     if (items.length) {
         return res.status(200).json({ success: true, data: items })
     } else {
