@@ -2,15 +2,8 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema
 
-const Itemschema = new Schema(
-    {
-        booking_start: { type: Date },
-        booking_end: { type: Date },
-        expireAt: { type: Date },
-        bucket: { type : Number },
-        item: { type: String },
-        email: { type: String },
-    },
-)
+import configData from "../config.json";
+
+const Itemschema = new Schema(configData.SCHEMA)
 
 export const Item = mongoose.model('Item', Itemschema, 'item');
