@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { Item } from '../models/item-model';
 
-export const getItems = async (req: Request, res: Response) => {
+export const getFilteredItems = async (req: Request, res: Response) => {
   if (req) {
     const items = await Item.find( { } );
     const no_email_items = items.map((it) =>
