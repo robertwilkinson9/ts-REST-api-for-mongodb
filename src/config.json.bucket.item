@@ -7,9 +7,11 @@
       "item": {"type": "String"},
       "email": {"type": "String"}
   },
+  "SHOW_ALL": false,
   "EXPORTS": [
     "booking_start",
     "booking_end",
+    "bucket",
     "item"
   ]
 }

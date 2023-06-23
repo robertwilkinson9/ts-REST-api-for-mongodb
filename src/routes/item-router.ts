@@ -1,3 +1,5 @@
+import configData from "../config.json";
+
 import express from 'express';
 import {createItem} from '../controllers/create_item';
 import {updateItem} from '../controllers/update_item';
@@ -12,5 +14,7 @@ itemRouter.post('/item', createItem)
 itemRouter.put('/item/:id', updateItem)
 itemRouter.delete('/item/:id', deleteItem)
 itemRouter.get('/item/:id', getItemById)
-itemRouter.get('/items', getItems)
-itemRouter.get('/filtereditems', getFilteredItems)
+itemRouter.get('/items', getFilteredItems)
+if (configData.SHOW_ALL !== false) {
+  itemRouter.get('/all_items', getItems)
+}
