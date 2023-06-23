@@ -7,17 +7,20 @@ import configData from "../config.json";
 export const getFilteredItems = async (req: Request, res: Response) => {
   if (req) {
     const items = await Item.find( { } );
-    const export_items = items.map((it) =>
-      {
-        let filtered = {};
-        configData.EXPORTS.filter((filter) => {
-          if (filter in it) {
-            filtered[filter] = it[filter];
-          }
-        }); 
-        return filtered;
-      } 
-    );
+    let export_items = items;
+    if (configData.EXPORTS && configData.EXPORTS.length) {
+      export_items = items.map((it) =>
+        {
+          let filtered = {};
+          configData.EXPORTS.filter((filter) => {
+            if (filter in it) {
+              filtered[filter] = it[filter];
+            }
+          });
+          return filtered;
+        }
+      );
+    }
     if (items.length) {
         return res.status(200).json({ success: true, data: export_items })
     } else {
