@@ -1,4 +1,7 @@
 {
+  "COLLECTION": "Item",
+  "LCCOLLECTION": "item",
+  "APIPORT": "5179",
   "SCHEMA": {
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
