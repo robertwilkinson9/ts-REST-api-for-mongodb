@@ -1,0 +1,16 @@
+{
+  "COLLECTION": "Todo",
+  "LCCOLLECTION": "todo",
+  "APIPORT": "5178",
+  "SCHEMA": {
+    "due": { "type": "Date" },
+    "summary": { "type": "String" },
+    "text": { "type": "String" }
+  },
+  "SHOW_ALL": true,
+  "EXPORTS": [
+    "due",
+    "summary",
+    "text"
+  ]
+}

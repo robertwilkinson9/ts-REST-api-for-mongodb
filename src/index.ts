@@ -5,8 +5,10 @@ import cors from 'cors';
 import { db } from "./db/index";
 import { itemRouter } from './routes/item-router';
 
+import configData from "./config.json";
+
 const app = express()
-const apiPort = 5179
+const apiPort = Number(configData.APIPORT);
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
