@@ -3,7 +3,6 @@
   "LCCOLLECTION": "item",
   "APIPORT": "5179",
   "SCHEMA": {
-      "_id": {"type": "String"},
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
