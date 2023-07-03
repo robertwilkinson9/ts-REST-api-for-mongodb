@@ -7,7 +7,7 @@
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
       "author": {"type": "String"},
-      "book": {"type": "String"},
+      "title": {"type": "String"},
       "email": {"type": "String"}
   },
   "SHOW_ALL": true,
@@ -15,6 +15,6 @@
     "booking_start",
     "booking_end",
     "author",
-    "book"
+    "title"
   ]
 }
