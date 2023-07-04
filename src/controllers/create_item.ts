@@ -8,7 +8,7 @@ export const createItem = (req: Request, res: Response) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a item',
+            error: 'You must provide an item',
         })
     }
 

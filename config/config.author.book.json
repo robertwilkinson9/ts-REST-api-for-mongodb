@@ -6,6 +6,7 @@
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
+      "bucket": {"type": "Number"},
       "author": {"type": "String"},
       "title": {"type": "String"},
       "email": {"type": "String"}
