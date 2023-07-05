@@ -1,4 +1,4 @@
-import configData from "../config.json";
+import configData from "../../config/config.json";
 
 import express from 'express';
 import {createItem} from '../controllers/create_item';

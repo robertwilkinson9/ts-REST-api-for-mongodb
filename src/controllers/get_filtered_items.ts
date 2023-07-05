@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { Item } from '../models/item-model';
 
-import configData from "../config.json";
+import configData from "../../config/config.json";
 
 export const getFilteredItems = async (req: Request, res: Response) => {
   if (req) {

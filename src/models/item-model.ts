@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import configData from "../config.json";
+import configData from "../../config/config.json";
 
 const schema = new mongoose.Schema(configData.SCHEMA)
 

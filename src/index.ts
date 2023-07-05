@@ -5,46 +5,21 @@ import cors from 'cors';
 import { db } from "./db/index";
 import { itemRouter } from './routes/item-router';
 
-if (process.argv.length == 3) {
-  import(process.argv[2]).then((configData) =>
-  {
-    const app = express()
-    const apiPort = Number(configData.APIPORT);
+import configData from "../config/config.json"
 
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(cors())
-    app.use(bodyParser.json())
+const app = express()
+const apiPort = Number(configData.APIPORT);
 
-    db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
+app.use(bodyParser.json())
 
-    app.get('/', (req: Request, res:Response) => {
-      console.log(req);
-      res.send('Hello World!')
-    })
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-    app.use('/api', itemRouter)
+app.get('/', (req: Request, res:Response) => {
+  res.send('Hello World!')
+})
 
-    app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
-});
-} else {
-  import("./config.json").then((configData) =>
-  {
-    const app = express()
-    const apiPort = Number(configData.APIPORT);
+app.use('/api', itemRouter)
 
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(cors())
-    app.use(bodyParser.json())
-
-    db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-
-    app.get('/', (req: Request, res:Response) => {
-        console.log(req);
-        res.send('Hello World!')
-    })
-
-    app.use('/api', itemRouter)
-
-    app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
-  });
-}
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

@@ -6,7 +6,8 @@
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
-      "floor": {"type": "Number"},
+      "bucket": {"type": "Number"},
+      "floor": {"type": "String"},
       "desk": {"type": "String"},
       "email": {"type": "String"}
   },

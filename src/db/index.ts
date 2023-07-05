@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import configData from "../config.json";
+import configData from "../../config/config.json";
 
 mongoose
     .connect('mongodb://127.0.0.1:27017/' + configData.LCCOLLECTION)
