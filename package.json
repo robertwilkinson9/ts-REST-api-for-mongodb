@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "start": "npx tsx src/index.ts",
-    "desk": "npx tsx src/index.ts ../config/config.floor.desk.json",
-    "book": "npx tsx src/index.ts ../config/config.author.book.json",
+    "desk": "cp config/config.floor.desk.json config/config.json && npx tsx src/index.ts",
+    "book": "cp config/config.author.book.json config/config.json && npx tsx src/index.ts",
+    "allitems": "concurrently --names \"BOOK,DESK\" --prefix-colors \"bgGreen.bold,bgMagenta.bold\" \"npm run book\" \"npm run desk\"",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "cd tests && bash testuri.sh"
   },
@@ -18,6 +19,7 @@
     "@types/node": "^20.3.3",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
+    "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "eslint": "^8.43.0",
     "express": "^4.18.2",
