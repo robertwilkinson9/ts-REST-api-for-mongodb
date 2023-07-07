@@ -9,9 +9,13 @@
     "todo": "cp config/config.todo.json config/config.json && npx tsx src/index.ts",
     "allitems": "concurrently --names \"BOOK,DESK\" --prefix-colors \"bgGreen.bold,bgMagenta.bold\" \"npm run book\" \"npm run desk\"",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "test": "cd tests && bash testuri.sh"
+    "test_server": "cp config/config.test.json config/config.json && npx tsx src/index.ts",
+    "test_script": "sleep 3 && cd tests && bash uritest.sh",
+    "test": "concurrently --names \"SERVER, SCRIPT\" --prefix-colors \"bgGreen.bold,bgMagenta.bold\" \"npm run test_server\" \"npm run test_script\""
   },
   "dependencies": {
+    "concurrently": "^8.2.0",
+    "save-dev": "^0.0.1-security",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
