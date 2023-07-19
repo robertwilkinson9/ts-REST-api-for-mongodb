@@ -9,7 +9,7 @@ This code started life from the ideas presented at https://dev.to/andrewbaisden/
 I used PostGresQL as my first backend to my react app, then decided that since I had only one table, that I would be better of with a NoSQL backend, so
 changed the code so that it worked with MongoDB rather than PgSQL. I then decide to chnage the JavaScript to TypeScript because I realised it was better.
 
-The backend is configured by <it>config.json</it> in the <strong>config</strong> directory.
+The backend is configured by <em>config.json</em> in the <strong>config</strong> directory.
 
 A number of exemplar files are provided in the <strong>config</strong> direcoty; each of which is copied into place by the targets in <em>package.json</em>
 
