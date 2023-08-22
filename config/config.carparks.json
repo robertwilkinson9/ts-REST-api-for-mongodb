@@ -1,0 +1,21 @@
+{
+  "COLLECTION": "Carpark",
+  "LCCOLLECTION": "carpark",
+  "APIPORT": "5182",
+  "SCHEMA": {
+      "booking_start": {"type": "Date"},
+      "booking_end": {"type": "Date"},
+      "expireAt": {"type": "Date"},
+      "carpark": {"type": "Number"},
+      "spot": {"type": "String"},
+      "registration_number": {"type": "String"}
+      "email": {"type": "String"}
+  },
+  "SHOW_ALL": true,
+  "EXPORTS": [
+    "booking_start",
+    "booking_end",
+    "carpark"
+    "spot"
+  ]
+}
