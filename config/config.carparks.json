@@ -6,7 +6,7 @@
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
-      "carpark": {"type": "Number"},
+      "bucket": {"type": "Number"},
       "bay": {"type": "String"},
       "registration_number": {"type": "String"},
       "email": {"type": "String"}
@@ -15,7 +15,7 @@
   "EXPORTS": [
     "booking_start",
     "booking_end",
-    "carpark",
+    "bucket",
     "bay"
   ]
 }
