@@ -1,6 +1,6 @@
 {
-  "COLLECTION": "Carpark",
-  "LCCOLLECTION": "carpark",
+  "COLLECTION": "Bay",
+  "LCCOLLECTION": "bay",
   "APIPORT": "5182",
   "SCHEMA": {
       "booking_start": {"type": "Date"},
