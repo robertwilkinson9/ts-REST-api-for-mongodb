@@ -62,6 +62,6 @@ initDatabase().then((client) => {
         cert: fs.readFileSync('./certs/localhost.crt'),
         key: fs.readFileSync('./certs/localhost.key')
     }, app).listen(
-        443, () => console.log('Server listening on https://localhost:443')
+        apiPort, () => console.log(`Server listening on https://localhost:${apiPort}`)
     );
 });
