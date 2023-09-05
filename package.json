@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "start": "npx tsx src/index.ts",
-    "book": "cp ../booking_system/config/config.library.author.book.json config/config.json && npx tsx src/index.ts",
-    "desk": "cp ../booking_system/config/config.work.floor.desk.json config/config.json && npx tsx src/index.ts",
-    "carpark": "cp ../booking_system/config/config.carparks.json config/config.json && npx tsx src/index.ts",
+    "book": "cp ../ts-reserve-assets/config/config.library.author.book.json config/config.json && npx tsx src/index.ts",
+    "desk": "cp ../ts-reserve-assets/config/config.work.floor.desk.json config/config.json && npx tsx src/index.ts",
+    "carpark": "cp ../ts-reserve-assets/config/config.carparks.json config/config.json && npx tsx src/index.ts",
     "todo": "cp config/config.todo.json config/config.json && npx tsx src/index.ts",
     "allitems": "concurrently --names \"BOOK,DESK\" --prefix-colors \"bgGreen.bold,bgMagenta.bold\" \"npm run book\" \"npm run desk\"",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
