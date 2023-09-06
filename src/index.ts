@@ -22,6 +22,7 @@ import configData from "../config/config.json"
 
 const app = express()
 const apiPort = Number(configData.APIPORT);
+const api_ip = configData.API_IP;
 
 var dbClient = null;
 var server = null;
@@ -53,7 +54,7 @@ app.get('/', (req: Request, res:Response) => {
 
 app.use('/api', itemRouter)
 
-// app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+// app.listen(apiPort, () => console.log(`Server running on ip ${api_ip} port ${apiPort}`))
 
 initDatabase().then((client) => {
     console.log('Database initialized');
@@ -62,6 +63,6 @@ initDatabase().then((client) => {
         cert: fs.readFileSync('./certs/localhost.crt'),
         key: fs.readFileSync('./certs/localhost.key')
     }, app).listen(
-        apiPort, () => console.log(`Server listening on https://localhost:${apiPort}`)
+        apiPort, () => console.log(`Server listening on https://${api_ip}:${apiPort}`)
     );
 });

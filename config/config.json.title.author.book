@@ -1,13 +1,46 @@
 {
+  "APIPORT": "5180",
+  "API_IP": "10.0.2.15",
   "COLLECTION": "Book",
   "LCCOLLECTION": "book",
-  "APIPORT": "5180",
+  "ITEM_NAME": "book",
+  "ITEM_LABEL": "title",
+  "BUCKET_NAME": "author",
+  "BUCKETS":
+  [
+    {
+      "name": "Jane Austen",
+      "items": [
+        "Emma",
+        "Mansfield Park",
+        "Northanger Abbey",
+        "Persuasion",
+        "Pride and Prejudice",
+        "Sense and Sensibility"
+      ]
+    },
+    {
+      "name": "George Orwell",
+      "items": [
+        "A Clergyman's Daughter",
+        "Animal Farm",
+        "Burmese Days",
+        "Coming Up for Air",
+        "Down and Out in Paris and London",
+        "Homage to Catalonia",
+        "Keep the Aspidistra Flying",
+        "Nineteen Eighty-Four",
+        "The Road to Wigan Pier"
+      ]
+    }
+  ],
   "SCHEMA": {
       "booking_start": {"type": "Date"},
       "booking_end": {"type": "Date"},
       "expireAt": {"type": "Date"},
+      "bucket": {"type": "Number"},
       "author": {"type": "String"},
-      "title": {"type": "String"},
+      "book": {"type": "String"},
       "email": {"type": "String"}
   },
   "SHOW_ALL": true,
@@ -15,6 +48,7 @@
     "booking_start",
     "booking_end",
     "author",
-    "title"
+    "bucket",
+    "book"
   ]
 }
