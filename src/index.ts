@@ -8,7 +8,7 @@ const {MongoClient} = require('mongodb');
 const mongo_uri = '127.0.0.1:27017';
 //const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
-console.log(collection);
+console.log(`collection is ${collection}`);
 // const uri = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 const uri = `mongodb://127.0.0.1:27017/${collection}?retryWrites=true&writeConcern=majority`;
 
@@ -22,7 +22,15 @@ import configData from "../config/config.json"
 
 const app = express()
 const apiPort = Number(configData.APIPORT);
-const api_ip = configData.API_IP;
+
+var api_ip = "localhost";
+console.log(`0. api_ip is ${api_ip}`);
+ 
+if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {
+  api_ip = configData.API_IP;
+  console.log(`1. api_ip is ${api_ip}`);
+}
+console.log(`2. api_ip is ${api_ip}`);
 
 var dbClient = null;
 var server = null;
@@ -53,8 +61,6 @@ app.get('/', (req: Request, res:Response) => {
 })
 
 app.use('/api', itemRouter)
-
-// app.listen(apiPort, () => console.log(`Server running on ip ${api_ip} port ${apiPort}`))
 
 initDatabase().then((client) => {
     console.log('Database initialized');
