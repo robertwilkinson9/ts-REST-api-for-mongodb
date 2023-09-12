@@ -1,16 +1,7 @@
 import express, { Request, Response } from "express";
-
-const https = require('https');
-const fs = require('fs');
-
-const {MongoClient} = require('mongodb');
-// Never hard-code your credentials, get them from config - in this case, the environment.
-const mongo_uri = '127.0.0.1:27017';
-//const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
-const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
-console.log(`collection is ${collection}`);
-// const uri = `mongodb://127.0.0.1:27017/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
-const uri = `mongodb://127.0.0.1:27017/${collection}?retryWrites=true&writeConcern=majority`;
+import * as fs from 'fs';
+import * as https from 'https';
+import { MongoClient } from 'mongodb';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -23,17 +14,14 @@ import configData from "../config/config.json"
 const app = express()
 const apiPort = Number(configData.APIPORT);
 
-var api_ip = "localhost";
-console.log(`0. api_ip is ${api_ip}`);
- 
-if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {
-  api_ip = configData.API_IP;
-  console.log(`1. api_ip is ${api_ip}`);
-}
-console.log(`2. api_ip is ${api_ip}`);
+// we run the API interface on the same server as mongodb - this could be different but for now ...
+const mongo_uri = '127.0.0.1:27017';
+const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
+console.log(`collection is ${collection}`);
+const uri = `mongodb://${mongo_uri}/${collection}?retryWrites=true&writeConcern=majority`;
 
-var dbClient = null;
-var server = null;
+var api_ip = "localhost";
+if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
 
 async function initDatabase() { 
     try {
@@ -61,6 +49,9 @@ app.get('/', (req: Request, res:Response) => {
 })
 
 app.use('/api', itemRouter)
+
+var dbClient: MongoClient = null;
+var server: Server = null;
 
 initDatabase().then((client) => {
     console.log('Database initialized');

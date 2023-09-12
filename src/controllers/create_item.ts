@@ -2,8 +2,14 @@ import { Request, Response } from "express";
 
 import { Item } from '../models/item-model';
 
-export const createItem = (req: Request, res: Response) => {
-    const body = req.body
+import { ItemData } from '../interfaces';
+
+interface ItemRequest extends Request {
+  body: ItemData;
+}
+
+export const createItem = (req: ItemRequest, res: Response) => {
+    const body = req.body 
 
     if (!body) {
         return res.status(400).json({
@@ -28,7 +34,7 @@ export const createItem = (req: Request, res: Response) => {
                 message: 'Item created!',
             })
         })
-        .catch(error => {
+        .catch((error: unknown) => {
             return res.status(400).json({
                 error,
                 message: 'Item not created!',
