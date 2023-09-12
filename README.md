@@ -7,7 +7,7 @@ This is a very simple REST API written in Typescript to use express to provide a
 This code started life from the ideas presented at https://dev.to/andrewbaisden/creating-react-node-apps-that-connect-to-postgresql-and-harperdb-41h3
 
 I used PostGresQL as my first backend to my react app, then decided that since I had only one table, that I would be better of with a NoSQL backend, so
-changed the code so that it worked with MongoDB rather than PgSQL. I then decide to chnage the JavaScript to TypeScript because I realised it was better.
+changed the code so that it worked with MongoDB rather than PgSQL. I then decide to change JavaScript to TypeScript because I realised it was better.
 
 The backend is configured by <em>config.json</em> in the <strong>config</strong> directory.
 
