@@ -16,3 +16,7 @@ A number of exemplar files are provided in the <strong>config</strong> direcoty;
 the facility to mask certain fields in the default, <em>all_items</em>, endpoint is provided.
 
 This is for suppression of PII, by default - there are easy ways to circumvent the restriction, though ...
+
+SSL is used for the REST API and certificates and keys must be supplied e.g.
+
+SSL_CERT=../certs/localhost.crt SSL_KEY=../certs/localhost.key npm run book
