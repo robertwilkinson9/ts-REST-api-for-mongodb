@@ -12,13 +12,27 @@ import { itemRouter } from './routes/item-router';
 import configData from "../config/config.json"
 
 const app = express()
-const apiPort = Number(configData.APIPORT);
+// const apiPort = Number(configData.APIPORT);
+const apiPort = configData.APIPORT;
 
+// console.log(`DB_NAME is ${process.env.DB_NAME}`);
+// console.log(`DB_USER is ${process.env.DB_USER}`);
+// console.log(`DB_PASSWORD is ${process.env.DB_PASSWORD}`);
+// console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
+// console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
+
+if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
+  console.log("Need to give path to SSL key and SSL certificate as environment variables");
+  process.exit(1);
+}
+
+// console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
 // we run the API interface on the same server as mongodb - this could be different but for now ...
 const mongo_uri = '127.0.0.1:27017';
 const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
 console.log(`collection is ${collection}`);
 const uri = `mongodb://${mongo_uri}/${collection}?retryWrites=true&writeConcern=majority`;
+//const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 
 var api_ip = "localhost";
 if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
@@ -57,8 +71,8 @@ initDatabase().then((client) => {
     console.log('Database initialized');
     dbClient = client;
     server = https.createServer({
-        cert: fs.readFileSync('./certs/localhost.crt'),
-        key: fs.readFileSync('./certs/localhost.key')
+        cert: fs.readFileSync(process.env.SSL_CERT),
+        key: fs.readFileSync(process.env.SSL_KEY)
     }, app).listen(
         apiPort, () => console.log(`Server listening on https://${api_ip}:${apiPort}`)
     );
