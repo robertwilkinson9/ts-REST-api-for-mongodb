@@ -17,7 +17,8 @@
   "dependencies": {
     "concurrently": "^8.2.0",
     "save-dev": "^0.0.1-security",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsx": "^3.13.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

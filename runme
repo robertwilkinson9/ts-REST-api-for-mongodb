@@ -20,5 +20,7 @@ fi
 MONGO_IP=$(docker inspect my-mongo | grep IPA | grep 172 | awk '{print $NF}' | sed -e 's/,//' | sed -e 's/"//g')
 echo mongo_ip is ${MONGO_IP}
 #
-docker build -t ${TYPE}_backend --build-arg cert=../certs/localhost.crt --build-arg key=../certs/localhost.key --build-arg mongoip=${MONGO_IP} .
+DOCKERFILE=Dockerfile.${TYPE}
+#
+docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg cert=../certs/localhost.crt --build-arg key=../certs/localhost.key --build-arg mongoip=${MONGO_IP} .
 docker run --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt ${TYPE}_backend
