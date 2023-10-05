@@ -3,14 +3,14 @@ TYPE=$1
 #
 rsync -av ../certs .
 #
-docker network ls | grep mongo-network > /dev/null
+docker network ls | grep -q mongo-network
 NETWORK_EXISTS=$?
 if [ ! $NETWORK_EXISTS ]
 then
   docker network create mongo-network
 fi
 #
-docker ps | grep my-mongo
+docker ps | grep -q my-mongo 
 MONGO_EXISTS=$?
 if [ ! $MONGO_EXISTS ]
 then
