@@ -14,14 +14,12 @@ import configData from "../config/config.json"
 const app = express()
 const apiPort = configData.APIPORT;
 
-/*
 console.log(`DB_NAME is ${process.env.DB_NAME}`);
 console.log(`DB_USER is ${process.env.DB_USER}`);
 console.log(`DB_PASSWORD is ${process.env.DB_PASSWORD}`);
 console.log(`MONGO_IP is ${process.env.MONGO_IP}`);
 console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
-*/
 
 if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
   console.log("Need to give path to SSL key and SSL certificate as environment variables");
