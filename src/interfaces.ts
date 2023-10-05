@@ -4,5 +4,5 @@ export interface ItemData {
   expireAt: string;
   bucket: number;
   email: string
-  [key: string]: string | number; // 👈️ variable key
+  [key: string]: string | number;
 }

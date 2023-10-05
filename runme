@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+TYPE=$1
+#
+rsync -av ../certs .
+#
+docker network ls | grep mongo-network > /dev/null
+NETWORK_EXISTS=$?
+if [ ! $NETWORK_EXISTS ]
+then
+  docker network create mongo-network
+fi
+#
+docker ps | grep my-mongo
+MONGO_EXISTS=$?
+if [ ! $MONGO_EXISTS ]
+then
+  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db -e MONGODB_INITDB_ROOT_USERNAME=robert -e MONGODB_INITDB_ROOT_PASSWORD=w1bbl3 mongo:latest
+fi
+#
+MONGO_IP=$(docker inspect my-mongo | grep IPA | grep 172 | awk '{print $NF}' | sed -e 's/,//' | sed -e 's/"//g')
+echo mongo_ip is ${MONGO_IP}
+#
+docker build -t ${TYPE}_backend --build-arg cert=../certs/localhost.crt --build-arg key=../certs/localhost.key --build-arg mongoip=${MONGO_IP} .
+docker run --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt ${TYPE}_backend
