@@ -1,26 +1,33 @@
 #!/usr/bin/bash
 TYPE=$1
+API_IP=$2
+PORT=$3
 #
 rsync -av ../certs .
 #
 docker network ls | grep -q mongo-network
 NETWORK_EXISTS=$?
-if [ ! $NETWORK_EXISTS ]
+if [ ! $NETWORK_EXISTS -eq 0 ]
 then
   docker network create mongo-network
 fi
 #
 docker ps | grep -q my-mongo 
 MONGO_EXISTS=$?
-if [ ! $MONGO_EXISTS ]
+if [ ! $MONGO_EXISTS -eq 0 ]
 then
-  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db -e MONGODB_INITDB_ROOT_USERNAME=robert -e MONGODB_INITDB_ROOT_PASSWORD=w1bbl3 mongo:latest
+#  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db -e MONGODB_INITDB_ROOT_USERNAME=robert -e MONGODB_INITDB_ROOT_PASSWORD=w1bbl3 mongo:latest
+  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db mongo:latest
 fi
 #
 MONGO_IP=$(docker inspect my-mongo | grep IPA | grep 172 | awk '{print $NF}' | sed -e 's/,//' | sed -e 's/"//g')
 echo mongo_ip is ${MONGO_IP}
+FIRST_DIGITS=$(echo ${MONGO_IP} | sed -e 's/[0-9]*$//')
+echo first_digits is ${FIRST_DIGITS}
+LAST_DIGIT=$(echo ${MONGO_IP} | sed -e 's/^.*\.//')
+echo last_digit is ${LAST_DIGIT}
 #
 DOCKERFILE=Dockerfile.${TYPE}
 #
-docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg SSL_CERT=/certs/localhost.crt --build-arg SSL_KEY=/certs/localhost.key --build-arg MONGO_IP=${MONGO_IP} .
-docker run --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt ${TYPE}_backend
+docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg SSL_CERT=/certs/localhost.crt --build-arg SSL_KEY=/certs/localhost.key --build-arg MONGO_IP=${MONGO_IP} --build-arg API_IP=${API_IP} .
+docker run --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt --env API_IP=${API_IP} -p $PORT:$PORT ${TYPE}_backend

@@ -38,10 +38,10 @@ const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
 //const uri = `mongodb://${mongo_uri}/${collection}?retryWrites=true&writeConcern=majority`;
 //const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 
-var api_ip = "localhost";
+var api_ip = process.env.API_IP || "localhost";
 console.log(`API_IP1 is ${api_ip}`);
-if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
-console.log(`API_IP2 is ${api_ip}`);
+// if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
+// console.log(`API_IP2 is ${api_ip}`);
 
 async function initDatabase() { 
     try {

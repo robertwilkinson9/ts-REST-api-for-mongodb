@@ -4,6 +4,8 @@ ARG SSL_CERT
 ENV SSL_CERT ${SSL_CERT}
 ARG SSL_KEY
 ENV SSL_KEY ${SSL_KEY}
+ARG API_IP
+ENV API_IP ${API_IP}
 ARG MONGO_IP
 ENV MONGO_IP ${MONGO_IP}
 
@@ -17,10 +19,8 @@ RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /s
 RUN mkdir /src/ts-REST-api-for-mongodb/config
 WORKDIR /src/ts-REST-api-for-mongodb
 RUN npm install
-#    "#!/bin/sh\nexec '/bin/$EXECUTABLE' -bar" 
 RUN : \
-    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} npm run book" > /exe \
+    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} API_IP=${API_IP} npm run book" > /exe \
     && chmod +x /exe
 RUN cat /exe
 CMD ["/exe"]
-#CMD [ SSL_CERT=${SSL_CERT}, SSL_KEY=${SSL_KEY}, MONGO_IP=${MONGO_IP}, "npm", "run", "book" ] 
