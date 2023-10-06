@@ -27,7 +27,7 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
 }
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
-console.log(`MONGO IP is ${mongoip}`)
+console.log(`MONGO IP 2 is ${mongoip}`)
 
 const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
 console.log(`collection is ${collection}`);
