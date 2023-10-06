@@ -38,8 +38,8 @@ const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
 //const uri = `mongodb://${mongo_uri}/${collection}?retryWrites=true&writeConcern=majority`;
 //const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 
-// var api_ip = "localhost";
-var api_ip = mongoip;
+var api_ip = "localhost";
+// var api_ip = mongoip;
 if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
 
 async function initDatabase() { 

@@ -22,5 +22,5 @@ echo mongo_ip is ${MONGO_IP}
 #
 DOCKERFILE=Dockerfile.${TYPE}
 #
-docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg cert=../certs/localhost.crt --build-arg key=../certs/localhost.key --build-arg mongoip=${MONGO_IP} .
+docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg SSL_CERT=/certs/localhost.crt --build-arg SSL_KEY=/certs/localhost.key --build-arg MONGO_IP=${MONGO_IP} .
 docker run --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt ${TYPE}_backend

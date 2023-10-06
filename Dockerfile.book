@@ -1,11 +1,11 @@
-FROM node:19-bullseye-slim
+FROM node:latest
 
-ARG cert
-ENV env_cert $cert
-ARG key
-ENV env_key $key
-ARG mongoip
-ENV env_mongoip $mongoip
+ARG SSL_CERT
+ENV SSL_CERT ${SSL_CERT}
+ARG SSL_KEY
+ENV SSL_KEY ${SSL_KEY}
+ARG MONGO_IP
+ENV MONGO_IP ${MONGO_IP}
 
 RUN apt update 
 RUN apt install -y git
@@ -17,4 +17,10 @@ RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /s
 RUN mkdir /src/ts-REST-api-for-mongodb/config
 WORKDIR /src/ts-REST-api-for-mongodb
 RUN npm install
-CMD [ "npm", "run", "book" ] 
+#    "#!/bin/sh\nexec '/bin/$EXECUTABLE' -bar" 
+RUN : \
+    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} npm run book" > /exe \
+    && chmod +x /exe
+RUN cat /exe
+CMD ["/exe"]
+#CMD [ SSL_CERT=${SSL_CERT}, SSL_KEY=${SSL_KEY}, MONGO_IP=${MONGO_IP}, "npm", "run", "book" ] 
