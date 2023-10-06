@@ -12,7 +12,8 @@ import { itemRouter } from './routes/item-router';
 import configData from "../config/config.json"
 
 const app = express()
-const apiPort = configData.APIPORT;
+const apiPort = process.env.API_PORT || configData.APIPORT;
+console.log(`api port is ${apiPort}`)
 
 console.log(`DB_NAME is ${process.env.DB_NAME}`);
 console.log(`DB_USER is ${process.env.DB_USER}`);
@@ -35,13 +36,11 @@ const connection_string = `mongodb://${mongoip}:27017/${collection}`;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
 
 const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
-//const uri = `mongodb://${mongo_uri}/${collection}?retryWrites=true&writeConcern=majority`;
-//const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 
-var api_ip = process.env.API_IP || "localhost";
-console.log(`API_IP1 is ${api_ip}`);
-// if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
-// console.log(`API_IP2 is ${api_ip}`);
+var apiIP = process.env.API_IP || "localhost";
+console.log(`ApiIP is ${apiIP}`);
+// if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {apiIP = configData.API_IP}
+// console.log(`API_IP2 is ${apiIP}`);
 
 async function initDatabase() { 
     try {
@@ -80,6 +79,6 @@ initDatabase().then((client) => {
         cert: fs.readFileSync(process.env.SSL_CERT),
         key: fs.readFileSync(process.env.SSL_KEY)
     }, app).listen(
-        apiPort, () => console.log(`Server listening on https://${api_ip}:${apiPort}`)
+        apiPort, apiIP, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
     );
 });
