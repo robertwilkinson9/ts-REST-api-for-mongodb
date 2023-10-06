@@ -6,6 +6,8 @@ ARG SSL_KEY
 ENV SSL_KEY ${SSL_KEY}
 ARG API_IP
 ENV API_IP ${API_IP}
+ARG API_PORT
+ENV API_PORT ${API_PORT}
 ARG MONGO_IP
 ENV MONGO_IP ${MONGO_IP}
 
@@ -20,7 +22,7 @@ RUN mkdir /src/ts-REST-api-for-mongodb/config
 WORKDIR /src/ts-REST-api-for-mongodb
 RUN npm install
 RUN : \
-    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} API_IP=${API_IP} npm run book" > /exe \
+    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} API_IP=${API_IP} API_PORT=${API_PORT} npm run book" > /exe \
     && chmod +x /exe
 RUN cat /exe
 CMD ["/exe"]
