@@ -28,7 +28,7 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
 console.log(`MONGO IP is ${mongoip}`)
-// const mongo_uri = `${mongoip}:27017';
+
 const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
 console.log(`collection is ${collection}`);
 const connection_string = `mongodb://${mongoip}:27017/${collection}`;
@@ -39,8 +39,9 @@ const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
 //const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongo_uri/${process.env.DB_NAME}?retryWrites=true&writeConcern=majority`;
 
 var api_ip = "localhost";
-// var api_ip = mongoip;
+console.log(`API_IP1 is ${api_ip}`);
 if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {api_ip = configData.API_IP}
+console.log(`API_IP2 is ${api_ip}`);
 
 async function initDatabase() { 
     try {
