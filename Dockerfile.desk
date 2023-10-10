@@ -1,0 +1,28 @@
+FROM node:latest
+
+ARG SSL_CERT
+ENV SSL_CERT ${SSL_CERT}
+ARG SSL_KEY
+ENV SSL_KEY ${SSL_KEY}
+ARG API_IP
+ENV API_IP ${API_IP}
+ARG API_PORT
+ENV API_PORT ${API_PORT}
+ARG MONGO_IP
+ENV MONGO_IP ${MONGO_IP}
+
+RUN apt update 
+RUN apt install -y git
+RUN mkdir /certs
+ADD ./certs/ /certs
+RUN mkdir /src 
+RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
+RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /src/ts-REST-api-for-mongodb
+RUN mkdir /src/ts-REST-api-for-mongodb/config
+WORKDIR /src/ts-REST-api-for-mongodb
+RUN npm install
+RUN : \
+    && /bin/echo -e "SSL_CERT=${SSL_CERT} SSL_KEY=${SSL_KEY} MONGO_IP=${MONGO_IP} API_IP=${API_IP} API_PORT=${API_PORT} npm run desk" > /exe \
+    && chmod +x /exe
+RUN cat /exe
+CMD ["/exe"]
