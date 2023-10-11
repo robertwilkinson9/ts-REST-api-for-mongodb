@@ -23,23 +23,32 @@ fi
 #
 MONGO_IP=$(docker inspect my-mongo | grep IPA | grep 172 | awk '{print $NF}' | sed -e 's/,//' | sed -e 's/"//g')
 echo mongo_ip is ${MONGO_IP}
+
+FIRST_DIGITS=$(echo ${MONGO_IP} | sed -e 's/[0-9]*$//')
+echo first_digits is ${FIRST_DIGITS}
+	
+LAST_DIGIT=$(echo ${MONGO_IP} | sed -e 's/^.*\.//')
+echo last_digit is ${LAST_DIGIT}
+
+NEXT_DIGIT=$((${LAST_DIGIT} + 1))
+echo next_digit is ${NEXT_DIGIT}
+	
 for TYPE in ${TYPES[@]}; do
 	echo TYPE is $TYPE
 	CONFIG_FILE=$(echo ${CONFIG_PREFIX}${TYPE}.json)
 	echo config file is $CONFIG_FILE
 	API_PORT=$(grep APIPORT $CONFIG_FILE | awk '{print $NF}' | sed -e 's/,$//')
-	DOCKERIP=$(grep DOCKERIP $CONFIG_FILE | awk '{print $NF}' | sed -e 's/,$//')
-	echo dockerip is $DOCKERIP and API_PORT is $API_PORT
+	echo API_PORT is $API_PORT
 	
-	FIRST_DIGITS=$(echo ${MONGO_IP} | sed -e 's/[0-9]*$//')
-	echo first_digits is ${FIRST_DIGITS}
-	
-	API_IP=$(echo ${FIRST_DIGITS}${DOCKERIP})
+	API_IP=$(echo ${FIRST_DIGITS}${NEXT_DIGIT})
 	echo api_ip is ${API_IP}
 
 	DOCKERFILE=Dockerfile.${TYPE}
 	echo DOCKERFILE is $DOCKERFILE
-#
+
 	docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg SSL_CERT=/certs/localhost.crt --build-arg SSL_KEY=/certs/localhost.key --build-arg MONGO_IP=${MONGO_IP} --build-arg API_IP=${API_IP} --build-arg API_PORT=${API_PORT} .
 	docker run --detach --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt --env API_IP=${API_IP} --env API_PORT=${API_PORT} -p $API_PORT:$API_PORT ${TYPE}_backend
+
+	NEXT_DIGIT=$((${NEXT_DIGIT} + 1))
+	echo next_digit is ${NEXT_DIGIT}
 done
