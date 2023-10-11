@@ -18,7 +18,7 @@ docker ps | grep -q my-mongo
 MONGO_EXISTS=$?
 if [ ! $MONGO_EXISTS -eq 0 ]
 then
-  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db mongo:latest
+  docker run -d --network mongo-network --name my-mongo -p 27017:27017 -v mongo-data:/data/db mongo:4.4.17
 fi
 #
 MONGO_IP=$(docker inspect my-mongo | grep IPA | grep 172 | awk '{print $NF}' | sed -e 's/,//' | sed -e 's/"//g')
