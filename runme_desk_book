@@ -31,7 +31,7 @@ for TYPE in ${TYPES[@]}; do
 	API_IP=$(echo ${FIRST_DIGITS}${NEXT_DIGIT})
 	DOCKERFILE=Dockerfile.${TYPE}
 
-	docker build -t ${TYPE}_backend --file ${DOCKERFILE} --build-arg SSL_CERT=/certs/localhost.crt --build-arg SSL_KEY=/certs/localhost.key --build-arg MONGO_IP=${MONGO_IP} --build-arg API_IP=${API_IP} --build-arg API_PORT=${API_PORT} .
+	docker build -t ${TYPE}_backend --file ${DOCKERFILE} .
 	docker run --detach --network mongo-network --env MONGO_IP=${MONGO_IP} --env SSL_KEY=/certs/localhost.key --env SSL_CERT=/certs/localhost.crt --env API_IP=${API_IP} --env API_PORT=${API_PORT} -p $API_PORT:$API_PORT ${TYPE}_backend
 
 	NEXT_DIGIT=$((${NEXT_DIGIT} + 1))
