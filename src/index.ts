@@ -39,8 +39,6 @@ const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
 
 var apiIP = process.env.API_IP || "localhost";
 console.log(`ApiIP is ${apiIP}`);
-// if (('API_IP' in configData) && (typeof configData.API_IP === "string")) {apiIP = configData.API_IP}
-// console.log(`API_IP2 is ${apiIP}`);
 
 async function initDatabase() { 
     try {
@@ -80,6 +78,5 @@ initDatabase().then((client) => {
         key: fs.readFileSync(process.env.SSL_KEY)
     }, app).listen(
         apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
-//        apiPort, apiIP, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
     );
 });
