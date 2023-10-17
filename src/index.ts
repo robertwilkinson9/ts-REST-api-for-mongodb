@@ -79,6 +79,7 @@ initDatabase().then((client) => {
         cert: fs.readFileSync(process.env.SSL_CERT),
         key: fs.readFileSync(process.env.SSL_KEY)
     }, app).listen(
-        apiPort, apiIP, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
+        apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
+//        apiPort, apiIP, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
     );
 });
