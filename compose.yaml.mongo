@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: "mongo:4.4.17"
+    environment:
+      - AUTH=no
+    container_name: mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+  mongodata:

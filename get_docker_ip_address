@@ -1,0 +1,2 @@
+#!/bin/bash
+jq -r '.[].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress'

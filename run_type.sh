@@ -2,7 +2,9 @@
 TYPE=$1
 echo $TYPE
 
-ln -sf Dockerfile.${TYPE} Dockerfile
-ln -sf compose.yaml.${TYPE} compose.yaml
-$(ls -l)
+if [ -e Dockerfile.${TYPE} ] ;
+then
+  ln -sf Dockerfile.${TYPE} Dockerfile
+fi
 
+docker compose --file compose.yaml.${TYPE} up
