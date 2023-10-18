@@ -1,5 +1,6 @@
 services:
-  api:
+  backend:
+    container_name: book_backend
     build: .
     ports:
       - "6180:6180"
@@ -11,9 +12,10 @@ services:
     image: "mongo:4.4.17"
     environment:
       - AUTH=no
+    container_name: mongo
     volumes:
-      - mongo-data:/data/db
+      - mongodata:/data/db
     ports:
       - "27017:27017"
 volumes:
-  mongo-data:
+  mongodata:
