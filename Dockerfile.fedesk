@@ -1,0 +1,20 @@
+FROM node:latest
+
+ARG SSL_CERT
+ENV SSL_CERT ${SSL_CERT}
+ARG SSL_KEY
+ENV SSL_KEY ${SSL_KEY}
+ARG API_IP
+ENV API_IP ${API_IP}
+ARG API_PORT
+ENV API_PORT ${API_PORT}
+
+RUN apt update 
+RUN apt install -y git
+RUN mkdir /certs
+ADD ./certs/ /certs
+RUN mkdir /src 
+RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
+WORKDIR /src/ts-reserve-assets
+RUN npm install
+CMD ["npm", "run", "desk"]
