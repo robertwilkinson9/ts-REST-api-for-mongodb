@@ -1,14 +1,11 @@
 #!/bin/bash
 TYPE=$1
-echo $TYPE
-
-FETYPE=$(echo -n ${TYPE} | sed -e 's/_frontend$//')
-echo FETYPE is $FE
+echo TYPE is ${TYPE} 
 
 cd ../ts-reserve-assets
-./make_type_yaml.sh ${FETYPE}
-echo backend_address ${FETYPE}
-cat compose.yaml.${FETYPE}
+./make_type_yaml.sh ${TYPE}
+echo backend_address ${TYPE}
+cat compose.yaml.${TYPE}
 cd -
 
 if [ -e Dockerfile.${TYPE} ] ;
