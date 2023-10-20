@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: book-backend
+  labels:
+    app: web
+spec:
+  containers:
+    - name: book-backend
+      image: robertwilkinsonwork299/reserve-assets-book-backend
+      ports:
+        - containerPort: 6180
+      env:
+      - name: SSL_CERT
+        value: /certs/localhost.crt
+      - name: SSL_KEY
+        value: /certs/localhost.key
+      - name: MONGO_IP
+        value: mongo-nodeport-svc
+      - name: DB_NAME
+        value: book
+      - name: API_PORT
+        value: "6180"
