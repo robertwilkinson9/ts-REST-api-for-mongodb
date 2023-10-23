@@ -56,7 +56,45 @@ async function initDatabase() {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors())
+
+/*
+either
+
+const allowedOrigins = ['http://localhost:3000'];
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+
+or
+
+const whitelist = ["http://localhost:3000"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+}
+---
+app.use(cors(options));
+*/
+
+//const allowedOrigins = ['https://172.16.1.20'];
+//const allowedOrigins = ['https://172.16.1.20:6120'];
+const allowedOrigins = [/^https:\/\/172.16.*.*/];
+//const allowedOrigins = [/^https:\/\/172.16.*.*:61*/];
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+console.log("CORS OPTIONS are ");
+console.log(options);
+
+app.use(cors(options));
+
+//app.use(cors())
 app.use(bodyParser.json())
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
