@@ -84,8 +84,8 @@ app.use(cors(options));
 
 //const allowedOrigins = ['https://172.16.1.20'];
 //const allowedOrigins = ['https://172.16.1.20:6120'];
-const allowedOrigins = [/^https:\/\/172.16.*.*/];
-//const allowedOrigins = [/^https:\/\/172.16.*.*:61*/];
+//const allowedOrigins = [/^https:\/\/172.16.*.*/];
+const allowedOrigins = [/^https:\/\/172.16.*.*:5[1-9][0-9][0-9]/];
 const options: cors.CorsOptions = {
   origin: allowedOrigins
 };
