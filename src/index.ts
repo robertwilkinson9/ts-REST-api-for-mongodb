@@ -32,6 +32,7 @@ console.log(`MONGO IP 2 is ${mongoip}`)
 
 const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
 console.log(`collection is ${collection}`);
+
 const connection_string = `mongodb://${mongoip}:27017/${collection}`;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
 
@@ -82,10 +83,13 @@ const corsOptions = {
 app.use(cors(options));
 */
 
+const backend_service = `${collection}-backend-service`;
+
 //const allowedOrigins = ['https://172.16.1.20'];
 //const allowedOrigins = ['https://172.16.1.20:6120'];
 //const allowedOrigins = [/^https:\/\/172.16.*.*/];
-const allowedOrigins = [/^https:\/\/172.16.*.*:5[1-9][0-9][0-9]/];
+//const allowedOrigins = [/^https:\/\/172.16.*.*:5[1-9][0-9][0-9]/];
+const allowedOrigins = [/^https:\/\/(172.16.*.*|book-backend-service):5*/];
 const options: cors.CorsOptions = {
   origin: allowedOrigins
 };
