@@ -11,6 +11,11 @@ interface ItemRequest extends Request {
 export const createItem = (req: ItemRequest, res: Response) => {
     const body = req.body 
 
+    console.log(`req.headers.origin is ${req.headers.origin}`)
+
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     if (!body) {
         return res.status(400).json({
             success: false,

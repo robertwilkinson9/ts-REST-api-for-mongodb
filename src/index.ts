@@ -95,7 +95,8 @@ const backend_service = `${collection}-backend-service`;
 //const allowedOrigins = [/^https:\/\/172\.16\.*\.*:????\//,
 //const allowedOrigins = [/^https:\/\/172\.16\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
 const allowedOrigins = [/^https:\/\/172\.[1-3][0-9]\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
-  /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//];
+  /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//,
+  /^https:\/\/localhost:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 //  /^https:\/\/book-backend-service:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 
 const options: cors.CorsOptions = {
@@ -112,6 +113,7 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.send('Hello World!')
 })
 

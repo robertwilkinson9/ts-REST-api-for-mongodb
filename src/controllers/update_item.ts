@@ -12,6 +12,10 @@ interface ItemRequest extends Request {
 const toObjectId = (st: string) => {return new Types.ObjectId(st);};
 
 export const updateItem = async (req: ItemRequest, res: Response) => {
+
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     const body = req.body
 
     if (!body) {
