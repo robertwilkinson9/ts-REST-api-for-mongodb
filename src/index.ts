@@ -93,7 +93,8 @@ const backend_service = `${collection}-backend-service`;
 //const allowedOrigins = [/^https:\/\/(172.16.*.*|book-backend-service):5???\//];
 //const allowedOrigins = [/^https:\/\/172\.16\.[0-9]*\.[0-9]*:????\//, /^https:\/\/book-backend-service:????\//];
 //const allowedOrigins = [/^https:\/\/172\.16\.*\.*:????\//,
-const allowedOrigins = [/^https:\/\/172\.16\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
+//const allowedOrigins = [/^https:\/\/172\.16\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
+const allowedOrigins = [/^https:\/\/172\.[1-3][0-9]\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
   /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 //  /^https:\/\/book-backend-service:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 
