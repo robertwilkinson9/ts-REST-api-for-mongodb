@@ -41,6 +41,17 @@ const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
 var apiIP = process.env.API_IP || "localhost";
 console.log(`ApiIP is ${apiIP}`);
 
+const post_path = `/api/${collection}/`
+console.log("post_path is ")
+console.log( post_path)
+app.options(post_path, function(req, res, next){
+  console.log(`FOUND OPTION for ${post_path}`);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.send(200);
+});
+
 async function initDatabase() { 
     try {
         const client = new MongoClient(uri, {
@@ -95,6 +106,9 @@ const backend_service = `${collection}-backend-service`;
 //const allowedOrigins = [/^https:\/\/172\.16\.*\.*:????\//,
 //const allowedOrigins = [/^https:\/\/172\.16\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
 const allowedOrigins = [/^https:\/\/172\.[1-3][0-9]\.0\.0:[1-9]?[0-9]?[0-9]?[0-9]?\//,
+/*
+  /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//]
+*/
   /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//,
   /^https:\/\/localhost:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 //  /^https:\/\/book-backend-service:[0-9]?[0-9]?[0-9]?[0-9]?\//];
@@ -107,16 +121,48 @@ console.log(options);
 
 app.use(cors(options));
 
+app.use(function(req, res, next) {
+    console.log("use function req.headers")
+    console.log(req.headers)
+    console.log(`use function req.headers.origin is ${req.headers.origin}`);
+//    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+    res.set("Access-Control-Allow-Origin", req.headers.origin);
+    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+
+/*
+    console.log("use function res.headers")
+    console.log(res.headers)
+    console.log("use function res")
+    console.log(res)
+*/
+    next();
+});
+
 //app.use(cors())
 app.use(bodyParser.json())
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.send('Hello World!')
 })
 
+/*
+app.post('/', function(req, res, next) {
+ // Handle the post for this route
+});
+*/
+
+app.options("/*", function(req, res, next){
+  console.log("FOUND OPTION");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.send(200);
+});
 app.use('/api', itemRouter)
 
 var dbClient: MongoClient = null;

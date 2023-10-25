@@ -13,8 +13,15 @@ const toObjectId = (st: string) => {return new Types.ObjectId(st);};
 
 export const updateItem = async (req: ItemRequest, res: Response) => {
 
+    res.set('Access-Control-Allow-Origin', req.headers.origin);
+    res.set('Vary', 'Origin');
+    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+/*
     res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Vary', 'Origin');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+*/
 
     const body = req.body
 

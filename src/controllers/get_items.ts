@@ -5,8 +5,15 @@ import { Item } from '../models/item-model';
 export const getItems = async (req: Request, res: Response) => {
   if (req) {
 
+    res.set('Access-Control-Allow-Origin', req.headers.origin);
+    res.set('Vary', 'Origin');
+    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+/*
     res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Vary', 'Origin');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+*/
 
     const items = await Item.find( { } );
     if (items.length) {

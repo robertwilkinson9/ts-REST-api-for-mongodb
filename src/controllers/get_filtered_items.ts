@@ -5,8 +5,14 @@ import { Item } from '../models/item-model';
 import configData from "../../config/config.json";
 
 export const getFilteredItems = async (req: Request, res: Response) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin);
+  res.set('Vary', 'Origin');
+  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+/*
   res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Vary', 'Origin');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+*/
 
   if (req) {
     const items = await Item.find( { } );
