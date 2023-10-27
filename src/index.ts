@@ -30,7 +30,7 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
 console.log(`MONGO IP 2 is ${mongoip}`)
 
-const collection = process.env.DB_NAME ? process.env.DB_NAME : "book";
+const collection = process.env.DB_NAME ? process.env.DB_NAME : "test";
 console.log(`collection is ${collection}`);
 
 const connection_string = `mongodb://${mongoip}:27017/${collection}`;
@@ -53,6 +53,7 @@ app.options(post_path, function(req, res, next){
   next();
 });
 
+/*
 app.options("/*", function(req, res, next){
   console.log("FOUND OPTION");
   console.log(`FOUND OPTION for ${req.headers.origin}`);
@@ -63,6 +64,7 @@ app.options("/*", function(req, res, next){
   res.send(200);
   next();
 });
+*/
 
 async function initDatabase() { 
     try {
@@ -81,15 +83,9 @@ async function initDatabase() {
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const backend_service = `${collection}-backend-service`;
+const allowedOrigins = [ /^https:\/\/172\.[1-3][0-9]\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?:[1-9]?[0-9]?[0-9]?[0-9]?\//, /^https:\/\/localhost:[0-9]?[0-9]?[0-9]?[0-9]?\//];
 
-const allowedOrigins = [/^https:\/\/172\.[1-3][0-9]\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?:[1-9]?[0-9]?[0-9]?[0-9]?\//,
-  /^https:\/\/book\-backend\-service:[0-9]?[0-9]?[0-9]?[0-9]?\//,
-  /^https:\/\/localhost:[0-9]?[0-9]?[0-9]?[0-9]?\//];
-
-const options: cors.CorsOptions = {
-  origin: allowedOrigins
-};
+const options: cors.CorsOptions = {origin: allowedOrigins};
 console.log("CORS OPTIONS are ");
 console.log(options);
 
