@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: book-backend
+  name: book-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: book-backend
+    spec:
+      containers:
+      - name: book-backend
+        image: robertwilkinsonwork299/reserve-assets-book-backend
+        ports:
+          - containerPort: 6180
+        env:
+        env:
+        - name: SSL_CERT
+          value: /certs/localhost.crt
+        - name: SSL_KEY
+          value: /certs/localhost.key
+        - name: MONGO_IP
+          value: mongo-nodeport-svc
+        - name: DB_NAME
+          value: book
+        - name: API_PORT
+          value: "6180"
