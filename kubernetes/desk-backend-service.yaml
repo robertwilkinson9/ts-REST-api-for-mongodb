@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-backend-service
+spec:
+  selector:
+    app: desk-backend
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 6179
+      targetPort: 6179
+      nodePort: 31002

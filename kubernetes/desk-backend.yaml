@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: desk-backend
+  name: desk-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: desk-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: desk-backend
+    spec:
+      containers:
+      - name: desk-backend
+        image: robertwilkinsonwork299/reserve-assets-desk-backend
+        ports:
+          - containerPort: 6179
+        env:
+        env:
+        - name: SSL_CERT
+          value: /certs/localhost.crt
+        - name: SSL_KEY
+          value: /certs/localhost.key
+        - name: MONGO_IP
+          value: mongo-nodeport-svc
+        - name: DB_NAME
+          value: desk
+        - name: API_PORT
+          value: "6179"
