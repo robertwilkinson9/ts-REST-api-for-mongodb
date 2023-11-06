@@ -10,9 +10,16 @@ interface ItemRequest extends Request {
 
 export const createItem = (req: ItemRequest, res: Response) => {
 
-    const body = req.body 
+    const ORIGIN = req.headers.origin || "127.0.0.1";
+    console.log(`createItem ORIGIN is ${ORIGIN}`);
 
-    console.log(`req.headers.origin is ${req.headers.origin}`)
+    res.set('Access-Control-Allow-Origin', ORIGIN);
+    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+
+    res.set('Vary', 'Origin');
+    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin");
+
+    const body = req.body 
 
     if (!body) {
         return res.status(400).json({
@@ -22,11 +29,6 @@ export const createItem = (req: ItemRequest, res: Response) => {
     }
 
     const item = new Item(body)
-
-    res.set('Access-Control-Allow-Origin', req.headers.origin);
-    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
-    res.set('Vary', 'Origin');
-    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin");
 
     if (!item) {
         const err = "No item created from request";

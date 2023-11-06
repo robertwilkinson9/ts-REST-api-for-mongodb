@@ -45,26 +45,14 @@ const post_path = `/api/${collection}/`
 console.log("post_path is ")
 console.log( post_path)
 app.options(post_path, function(req, res, next){
-  console.log(`FOUND OPTION for ${post_path} and origin of ${req.headers.origin}`);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  const ORIGIN = req.headers.origin || "127.0.0.1";
+  console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
+  res.header('Access-Control-Allow-Origin', ORIGIN);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.sendStatus(200);
 //  next();
 });
-
-/*
-app.options("/*", function(req, res, next){
-  console.log("FOUND OPTION");
-  console.log(`FOUND OPTION for ${req.headers.origin}`);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-//  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  res.send(200);
-  next();
-});
-*/
 
 async function initDatabase() { 
     try {
@@ -92,10 +80,12 @@ console.log(options);
 app.use(cors(options));
 
 app.use(function(req, res, next) {
-    res.set("Access-Control-Allow-Origin", req.headers.origin);
-    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  const ORIGIN = req.headers.origin || "127.0.0.1";
+  console.log(`USE ORIGIN is ${ORIGIN}`);
+  res.set("Access-Control-Allow-Origin", ORIGIN);
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
 
-    next();
+  next();
 });
 
 app.use(bodyParser.json())
@@ -103,7 +93,9 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
-  res.set("Access-Control-Allow-Origin", req.headers.origin);
+  const ORIGIN = req.headers.origin || "127.0.0.1";
+  console.log(`/ ORIGIN is ${ORIGIN}`);
+  res.set("Access-Control-Allow-Origin", ORIGIN);
   res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.send('Hello World!')
 })
