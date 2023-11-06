@@ -12,11 +12,12 @@ interface ItemRequest extends Request {
 const toObjectId = (st: string) => {return new Types.ObjectId(st);};
 
 export const updateItem = async (req: ItemRequest, res: Response) => {
-    const ORIGIN = req.headers.origin || "https://127.0.0.1";
+//    const ORIGIN = req.headers.origin || "https://127.0.0.1";
+    const ORIGIN = req.headers.origin || "https://localhost";
     console.log(`updateItem ORIGIN is ${ORIGIN}`);
 
     res.set('Access-Control-Allow-Origin', ORIGIN);
-    res.set('Access-Control-Allow-Origin', 'https://localhost');
+//    res.set('Access-Control-Allow-Origin', 'https://localhost');
     res.set('Vary', 'Origin');
     res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
