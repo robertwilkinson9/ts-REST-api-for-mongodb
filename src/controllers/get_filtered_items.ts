@@ -5,10 +5,11 @@ import { Item } from '../models/item-model';
 import configData from "../../config/config.json";
 
 export const getFilteredItems = async (req: Request, res: Response) => {
-  const ORIGIN = req.headers.origin || "127.0.0.1";
+  const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`getFilteredItems ORIGIN is ${ORIGIN}`);
 
   res.set('Access-Control-Allow-Origin', ORIGIN);
+  res.set('Access-Control-Allow-Origin', 'https://localhost');
   res.set('Vary', 'Origin');
   res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
