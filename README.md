@@ -17,6 +17,31 @@ the facility to mask certain fields in the default, <em>all_items</em>, endpoint
 
 This is for suppression of PII, by default - there are easy ways to circumvent the restriction, though ...
 
+SSL
+---
+
 SSL is used for the REST API and certificates and keys must be supplied e.g.
 
 SSL_CERT=../certs/localhost.crt SSL_KEY=../certs/localhost.key npm run book
+
+DOCKER
+------
+
+docker compose can be used to start up a set of images and scripts are provided to manage the process.
+
+run_mongo.sh should be run first, then
+
+run_backend_type.sh TYPE
+
+should be run to start up the appropriate backend service
+
+run_frontend_type.sh TYPE
+
+is then run to run the corresponding frontend service.
+
+The log files of the services provide some information.
+
+KUBERNETES
+----------
+
+Some example yaml files are in the kubernetes directory alongside some scripts to write the frontend yaml file, our application can not see the ENV variables apart from those we prefix with VITE_ so we build the frontend yaml file here. It would be better to use the ENV variables, but ...
