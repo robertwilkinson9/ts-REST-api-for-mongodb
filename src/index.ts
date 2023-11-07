@@ -46,20 +46,12 @@ const post_path = `/api/${collection}/`
 console.log("post_path is ")
 console.log( post_path)
 app.options(post_path, function(req, res, next){
-//  const ORIGIN = req.headers.origin || "https://127.0.0.1";
   const ORIGIN = req.headers.origin || 'https://localhost';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
   res.header('Access-Control-Allow-Origin', ORIGIN);
-/*
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Origin', 'https://localhost');
-  res.header('Access-Control-Allow-Origin', 'localhost');
-*/
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  console.dir(res);
   res.sendStatus(200);
-//  next();
 });
 
 async function initDatabase() { 
@@ -80,6 +72,7 @@ async function initDatabase() {
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const allowedOrigins = [ 
+  /^https:\/\/192\.168\.[1-9][0-9]?[0-9]?\.[1-9][0-9]?[0-9]?:[1-9]?[0-9]?[0-9]?[0-9]?\//,
   /^https:\/\/172\.[1-3][0-9]\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?:[1-9]?[0-9]?[0-9]?[0-9]?\//,
   /^https:\/\/10\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?:[1-9]?[0-9]?[0-9]?[0-9]?\//,
   /^https:\/\/localhost:[0-9]?[0-9]?[0-9]?[0-9]?\//
