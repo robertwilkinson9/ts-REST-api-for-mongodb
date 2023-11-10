@@ -48,10 +48,15 @@ console.log( post_path)
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
+  res.set('Access-Control-Allow-Origin', ORIGIN);
+  res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+/*
   res.header('Access-Control-Allow-Origin', ORIGIN);
 //  res.header('Access-Control-Allow-Origin', 'https://localhost');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+*/
   res.sendStatus(200);
 });
 
