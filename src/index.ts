@@ -46,9 +46,10 @@ const post_path = `/api/${collection}/`
 console.log("post_path is ")
 console.log( post_path)
 app.options(post_path, function(req, res, next){
-  const ORIGIN = req.headers.origin || 'https://localhost';
+  const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
   res.header('Access-Control-Allow-Origin', ORIGIN);
+//  res.header('Access-Control-Allow-Origin', 'https://localhost');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.sendStatus(200);
@@ -85,7 +86,7 @@ console.log(options);
 app.use(cors(options));
 
 app.use(function(req, res, next) {
-  const ORIGIN = req.headers.origin || "https://localhost";
+  const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`USE ORIGIN is ${ORIGIN}`);
   res.set("Access-Control-Allow-Origin", ORIGIN);
 //  res.set('Access-Control-Allow-Origin', 'https://localhost');
@@ -99,11 +100,11 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
-  const ORIGIN = req.headers.origin || "https://localhost";
+  const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`/ ORIGIN is ${ORIGIN}`);
   res.set("Access-Control-Allow-Origin", ORIGIN);
-//  res.set('Access-Control-Allow-Origin', 'https://localhost');
-  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set('Access-Control-Allow-Origin', 'https://localhost');
+//  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.send('Hello World!')
 })
 
