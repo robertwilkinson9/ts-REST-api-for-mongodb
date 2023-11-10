@@ -103,8 +103,8 @@ app.get('/', (req: Request, res:Response) => {
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`/ ORIGIN is ${ORIGIN}`);
   res.set("Access-Control-Allow-Origin", ORIGIN);
-  res.set('Access-Control-Allow-Origin', 'https://localhost');
-//  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+//  res.set('Access-Control-Allow-Origin', 'https://localhost');
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.send('Hello World!')
 })
 
