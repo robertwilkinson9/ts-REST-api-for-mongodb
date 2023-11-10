@@ -9,10 +9,10 @@ export const getFilteredItems = async (req: Request, res: Response) => {
   const ORIGIN = req.headers.origin || "https://localhost";
   console.log(`getFilteredItems ORIGIN is ${ORIGIN}`);
 
-  res.set('Access-Control-Allow-Origin', ORIGIN);
-//  res.set('Access-Control-Allow-Origin', 'https://localhost');
-  res.set('Vary', 'Origin');
-  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader('Access-Control-Allow-Origin', ORIGIN);
+//  res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
+  res.setHeader('Vary', 'Origin');
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
   if (req) {
     const items = await Item.find( { } );
