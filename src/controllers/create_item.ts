@@ -13,12 +13,13 @@ export const createItem = (req: ItemRequest, res: Response) => {
     const ORIGIN = req.headers.origin || "https://localhost";
     console.log(`createItem ORIGIN is ${ORIGIN}`);
 
-    res.setHeader('Access-Control-Allow-Origin', ORIGIN);
-//    res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
-    res.setHeader('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+/*
+    res.set('Access-Control-Allow-Origin', ORIGIN);
+    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
 
-    res.setHeader('Vary', 'Origin');
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin");
+    res.set('Vary', 'Origin');
+    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin");
+*/
 
     const body = req.body 
 

@@ -30,7 +30,6 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
 console.log(`MONGO IP 2 is ${mongoip}`)
 
-// const collection = process.env.DB_NAME ? process.env.DB_NAME : "test";
 const collection = process.env.DB_NAME || "test";
 console.log(`collection is ${collection}`);
 
@@ -48,15 +47,9 @@ console.log( post_path)
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
-  res.setHeader('Access-Control-Allow-Origin', ORIGIN);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-/*
-  res.header('Access-Control-Allow-Origin', ORIGIN);
-//  res.header('Access-Control-Allow-Origin', 'https://localhost');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-*/
+  res.set('Access-Control-Allow-Origin', ORIGIN);
+  res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
   res.sendStatus(200);
 });
 
@@ -93,9 +86,9 @@ app.use(cors(options));
 app.use(function(req, res, next) {
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`USE ORIGIN is ${ORIGIN}`);
-  res.setHeader("Access-Control-Allow-Origin", ORIGIN);
-//  res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
-  res.setHeader('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set("Access-Control-Allow-Origin", ORIGIN);
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
 
   next();
 });
@@ -107,9 +100,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 app.get('/', (req: Request, res:Response) => {
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
   console.log(`/ ORIGIN is ${ORIGIN}`);
-  res.setHeader("Access-Control-Allow-Origin", ORIGIN);
-//  res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
-  res.setHeader('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set("Access-Control-Allow-Origin", ORIGIN);
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
   res.send('Hello World!')
 })
 
