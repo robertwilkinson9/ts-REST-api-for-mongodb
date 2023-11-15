@@ -5,15 +5,6 @@ import { Item } from '../models/item-model';
 import configData from "../../config/config.json";
 
 export const getFilteredItems = async (req: Request, res: Response) => {
-  const ORIGIN = req.headers.origin || "https://localhost";
-  console.log(`getFilteredItems ORIGIN is ${ORIGIN}`);
-
-/*
-  res.set('Access-Control-Allow-Origin', ORIGIN);
-  res.set('Vary', 'Origin');
-  res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-*/
-
   if (req) {
     const items = await Item.find( { } );
     let export_items = items;

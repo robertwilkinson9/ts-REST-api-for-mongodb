@@ -10,17 +10,6 @@ interface ItemRequest extends Request {
 
 export const createItem = (req: ItemRequest, res: Response) => {
 
-    const ORIGIN = req.headers.origin || "https://localhost";
-    console.log(`createItem ORIGIN is ${ORIGIN}`);
-
-/*
-    res.set('Access-Control-Allow-Origin', ORIGIN);
-    res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
-
-    res.set('Vary', 'Origin');
-    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin");
-*/
-
     const body = req.body 
 
     if (!body) {

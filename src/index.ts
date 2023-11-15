@@ -28,10 +28,8 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
 }
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
-console.log(`MONGO IP 2 is ${mongoip}`)
 
 const collection = process.env.DB_NAME || "test";
-console.log(`collection is ${collection}`);
 
 const connection_string = `mongodb://${mongoip}:27017/${collection}`;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
@@ -42,8 +40,7 @@ var apiIP = process.env.API_IP || "localhost";
 console.log(`ApiIP is ${apiIP}`);
 
 const post_path = `/api/${collection}/`
-console.log("post_path is ")
-console.log( post_path)
+# POST sends OPTIONS first, so we set appropriate response headers and send success status.
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
@@ -78,14 +75,12 @@ const allowedOrigins = [
 ];
 
 const options: cors.CorsOptions = {origin: allowedOrigins};
-console.log("CORS OPTIONS are ");
-console.log(options);
 
 app.use(cors(options));
 
 app.use(function(req, res, next) {
+// add appropriate response headers for CORS
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
-  console.log(`USE ORIGIN is ${ORIGIN}`);
   res.set("Access-Control-Allow-Origin", ORIGIN);
   res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
@@ -98,8 +93,8 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
+// add appropriate response headers for CORS
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
-  console.log(`/ ORIGIN is ${ORIGIN}`);
   res.set("Access-Control-Allow-Origin", ORIGIN);
   res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
