@@ -22,28 +22,20 @@ SSL
 
 SSL is used for the REST API and certificates and keys must be supplied e.g.
 
-<code>
-SSL_CERT=../certs/localhost.crt SSL_KEY=../certs/localhost.key npm run book
-</code>
+<code>SSL_CERT=../certs/localhost.crt SSL_KEY=../certs/localhost.key npm run book</code>
 
 DOCKER
 ------
 
 <code>docker compose</code> can be used to start up a set of images and some scripts are provided to manage the process.
 
-<code>
-run_mongo.sh should be run first, then
-</code>
+<code>run_mongo.sh</code> should be run first, then
 
-<code>
-run_backend_type.sh TYPE
-</code>
+<code>run_backend_type.sh TYPE</code>
 
 should be run to start up the appropriate backend service
 
-<code>
-run_frontend_type.sh TYPE
-</code>
+<code>run_frontend_type.sh TYPE</code>
 
 is then run to run the corresponding frontend service, which displays the address where it can be accessed.
 
@@ -62,23 +54,17 @@ For each frontend we start the backend, then the backend service
 
 e.g.
 
-<code>
-kubectl apply -f desk-backend.yaml
-kubectl apply -f desk-backend-service.yaml
-</code>
+<code>kubectl apply -f desk-backend.yaml
+kubectl apply -f desk-backend-service.yaml</code>
 
 Then run 
 
-<code>
-./write_frontend_yaml.sh <name of backend>
-</code>
+<code>./write_frontend_yaml.sh <name of backend></code>
 
 Then the frontend can be applied and started.
 
 e.g.
 
-<code>
-kubectl apply -f desk-frontend.yaml
-</code>
+<code>kubectl apply -f desk-frontend.yaml</code>
 
 Some example yaml files are in the kubernetes directory alongside a script to write the appropriate frontend yaml file, our application can not see the ENV variables apart from those we prefix with VITE_ so we build the frontend yaml file here. It would be better to use the ENV variables, but ...
