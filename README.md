@@ -54,7 +54,8 @@ For each frontend we start the backend, then the backend service
 
 e.g.
 
-<code>kubectl apply -f desk-backend.yaml
+<code>
+kubectl apply -f desk-backend.yaml
 kubectl apply -f desk-backend-service.yaml</code>
 
 Then run 
