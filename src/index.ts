@@ -40,7 +40,7 @@ var apiIP = process.env.API_IP || "localhost";
 console.log(`ApiIP is ${apiIP}`);
 
 const post_path = `/api/${collection}/`
-# POST sends OPTIONS first, so we set appropriate response headers and send success status.
+// POST sends OPTIONS first, so we set appropriate response headers and send success status.
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
