@@ -1,10 +1,6 @@
 #/bin/bash
 TYPE=$1
 PORT=$2
-BACKEND_IP=$(kubectl describe service/${TYPE}-backend-service | grep ^IP: | awk '{print $NF}')
-echo beip is $BACKEND_IP
-BACKEND_PORT=$(kubectl describe service/${TYPE}-backend-service | grep TargetPort: | awk '{print $2}' | awk -F/ '{print $1}')
-echo beport is $BACKEND_PORT
 SRC_DIR="../../typescript/ts-reserve-assets/"
 FE_PORT=$(cat ${SRC_DIR}/package.json | jq --raw-output .config.${TYPE})
 echo FE_PORT is $FE_PORT
