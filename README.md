@@ -50,21 +50,29 @@ The kubernetes yaml files reference the images constructed and uploaded in the p
 
 Typically the mongodb service is started
 
-For each frontend we start the backend, then the backend service 
+For each frontend start the backend
 
 e.g.
 
 <code>kubectl apply -f desk-backend.yaml</code>
+
+then start the backend service
+
+e.g.
+
 <code>kubectl apply -f desk-backend-service.yaml</code>
 
-Then run 
+then run 
 
 <code>./write_frontend_yaml.sh <name of backend></code>
 
-Then the frontend can be applied and started.
+then the frontend can be applied and started.
 
 e.g.
 
 <code>kubectl apply -f desk-frontend.yaml</code>
 
-Some example yaml files are in the kubernetes directory alongside a script to write the appropriate frontend yaml file, our application can not see the ENV variables apart from those we prefix with VITE_ so we build the frontend yaml file here. It would be better to use the ENV variables, but ...
+It is not possible for the TS code to resolve the symbol used by Kubernetes to identify resources so we resolve the names to IP addresses outside the code. There are probably much better ways of achieving this, but until then the above is effective.
+
+Some example yaml files are in the kubernetes directory alongside a script to write the appropriate frontend yaml file, our application can not see the ENV variables apart from those we prefix with VITE_ so we build the frontend yaml file here. It would be better to use the ENV variables, but ... 
+
