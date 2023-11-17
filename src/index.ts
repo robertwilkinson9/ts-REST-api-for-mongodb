@@ -31,7 +31,10 @@ const mongoip = process.env.MONGO_IP || "127.0.0.1"
 
 const collection = process.env.DB_NAME || "test";
 
-const connection_string = `mongodb://${mongoip}:27017/${collection}`;
+const have_user = ((process.env.DB_USER !== undefined) && (process.env.DB_PASSWORD !== undefined));
+console.log("HAVE USER");
+console.dir(have_user);
+const connection_string = have_user ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${mongoip}:27017/${collection}` : `mongodb://${mongoip}:27017/${collection}`;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
 
 const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
