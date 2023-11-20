@@ -2,7 +2,7 @@ services:
   mongo:
     image: "mongo:4.4.17"
     environment:
-      - AUTH=no
+      - AUTH=yes
     container_name: mongo
     volumes:
       - mongodata:/data/db
