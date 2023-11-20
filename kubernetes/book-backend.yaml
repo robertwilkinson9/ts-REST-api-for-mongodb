@@ -28,8 +28,12 @@ spec:
         - name: SSL_KEY
           value: /certs/localhost.key
         - name: MONGO_IP
-          value: mongo-nodeport-svc
+          value: my-mongodb.default.svc.cluster.local
         - name: DB_NAME
           value: book
+        - name: DB_USER
+          value: reserver
+        - name: DB_PASSWORD
+          value: ass3ts
         - name: API_PORT
           value: "6180"
