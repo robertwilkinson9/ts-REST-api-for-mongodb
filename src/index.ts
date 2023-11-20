@@ -34,6 +34,7 @@ const collection = process.env.DB_NAME || "test";
 const have_user = ((process.env.DB_USER !== undefined) && (process.env.DB_PASSWORD !== undefined));
 console.log("HAVE USER");
 console.dir(have_user);
+// const connection_string = have_user ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${mongoip}:27017/${collection}?authSource=${collection}` : `mongodb://${mongoip}:27017/${collection}`;
 const connection_string = have_user ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${mongoip}:27017/${collection}` : `mongodb://${mongoip}:27017/${collection}`;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
 
@@ -58,6 +59,7 @@ async function initDatabase() {
         const client = new MongoClient(uri, {
           useNewUrlParser: true,
           useUnifiedTopology: true,
+          family: 4,
         });
 
         await client.connect();
