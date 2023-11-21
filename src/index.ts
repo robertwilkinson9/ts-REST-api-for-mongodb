@@ -63,6 +63,8 @@ async function initDatabase() {
         });
 
         await client.connect();
+        console.log("CLIENT");
+        console.dir(client);
         return client;
     } catch (error) {
         console.error(error);
