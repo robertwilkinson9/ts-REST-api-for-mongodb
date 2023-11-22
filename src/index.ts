@@ -50,30 +50,6 @@ app.options(post_path, function(req, res, next){
   res.sendStatus(200);
 });
 
-async function initDatabase() { 
-    try {
-/*
-        const client = new MongoClient(uri, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          family: 4,
-        });
-*/
-
-        const client = {};
-        await mongoose.connect(uri, {
-            "auth": { "authSource": "admin" },
-            "useMongoClient": true
-        })
-//        await client.connect();
-        console.log("DATABASE INITIALISED and CLIENT available");
-        return client;
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-}
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const allowedOrigins = [ 
@@ -110,24 +86,11 @@ app.get('/', (req: Request, res:Response) => {
   res.send('Hello World!')
 })
 
-app.use('/api', function(req, res, next) {
-  console.log("API CALL");
-//  console.dir(req);
-  next();
-});
-
-// var dbClient: MongoClient = null;
-var server: Server = null;
-
-//initDatabase().then((client) => {
-//   console.log('Database initialized');
-////    dbClient = client;
-    server = https.createServer({
-        cert: fs.readFileSync(process.env.SSL_CERT),
-        key: fs.readFileSync(process.env.SSL_KEY)
-    }, app).listen(
-        apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
-    );
-//});
+const server = https.createServer({
+  cert: fs.readFileSync(process.env.SSL_CERT),
+  key: fs.readFileSync(process.env.SSL_KEY)
+}, app).listen(
+  apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
+);
 
 app.use('/api', itemRouter)
