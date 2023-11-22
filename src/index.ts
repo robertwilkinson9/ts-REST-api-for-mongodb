@@ -18,11 +18,9 @@ const apiPort = process.env.API_PORT || configData.APIPORT;
 console.log(`api port is ${apiPort}`)
 
 console.log(`DB_NAME is ${process.env.DB_NAME}`);
-console.log(`DB_USER is ${process.env.DB_USER}`);
-console.log(`DB_PASSWORD is ${process.env.DB_PASSWORD}`);
-console.log(`MONGO_IP is ${process.env.MONGO_IP}`);
 console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
+console.log(`CONNECTION_STRING is ${process.env.CONNECTION_STRING}`);
 
 if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
   console.log("Need to give path to SSL key and SSL certificate as environment variables");
@@ -33,11 +31,7 @@ const mongoip = process.env.MONGO_IP || "127.0.0.1"
 
 const collection = process.env.DB_NAME || "test";
 
-const have_user = ((process.env.DB_USER !== undefined) && (process.env.DB_PASSWORD !== undefined));
-console.log("HAVE USER");
-console.dir(have_user);
-// const connection_string = have_user ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${mongoip}:27017/${collection}?authSource=${collection}` : `mongodb://${mongoip}:27017/${collection}`;
-const connection_string = have_user ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${mongoip}:27017/${collection}` : `mongodb://${mongoip}:27017/${collection}`;
+const connection_string = process.env.CONNECTION_STRING;
 console.log(`CONNECTION STRING IP is ${connection_string}`)
 
 const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
