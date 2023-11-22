@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 
-import configData from "../../config/config.json";
-
-const mongoip = process.env.MONGO_IP || "127.0.0.1"
-const connection_string = `mongodb://${mongoip}:27017/` + configData.LCCOLLECTION;
+const connection_string = process.env.CONNECTION_STRING 
 
 mongoose
     .connect(connection_string)
