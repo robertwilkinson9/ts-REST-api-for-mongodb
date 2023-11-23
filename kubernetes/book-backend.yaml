@@ -22,7 +22,6 @@ spec:
         ports:
           - containerPort: 6180
         env:
-        env:
         - name: SSL_CERT
           value: /certs/localhost.crt
         - name: SSL_KEY
