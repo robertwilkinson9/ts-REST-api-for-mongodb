@@ -34,7 +34,10 @@ spec:
           value: reserver
         - name: DB_PASSWORD
           value: assets
-        - name: CONNECTION_STRING
-          value: mongodb://reserver:assets@my-mongodb.default.svc.cluster.local:27017/book
         - name: API_PORT
           value: "6180"
+        - name: CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-connection-strings
+              key: book_connection_string
