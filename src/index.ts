@@ -22,22 +22,14 @@ console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
 console.log(`CONNECTION_STRING is ${process.env.CONNECTION_STRING}`);
 
-if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
-  console.log("Need to give path to SSL key and SSL certificate as environment variables");
+if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTION_STRING)) {
+  console.log("Need to give path to SSL key and SSL certificate and a connection string for mongoDB as environment variables");
   process.exit(1);
 }
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
-
 const collection = process.env.DB_NAME || "test";
-
-const connection_string = process.env.CONNECTION_STRING;
-console.log(`CONNECTION STRING IP is ${connection_string}`)
-
-const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
-
-var apiIP = process.env.API_IP || "localhost";
-console.log(`ApiIP is ${apiIP}`);
+const apiIP = process.env.API_IP || "localhost";
 
 const post_path = `/api/${collection}/`
 // POST sends OPTIONS first, so we set appropriate response headers and send success status.
