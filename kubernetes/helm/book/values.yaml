@@ -101,4 +101,3 @@ containerPort: "6180"
 
 apiPort: "6180"
 dbName: "book"
-connectionString: "mongodb://reserver:assets@my-mongodb.default.svc.cluster.local:27017/book"

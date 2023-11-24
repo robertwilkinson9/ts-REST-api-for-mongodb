@@ -60,7 +60,10 @@ spec:
             - name: DB_NAME
               value: "{{ .Values.dbName }}"
             - name: CONNECTION_STRING
-              value: "{{ .Values.connectionString }}"
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-connection-strings
+                  key: book_connection_string
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
