@@ -22,14 +22,22 @@ spec:
         ports:
           - containerPort: 6179
         env:
-        env:
         - name: SSL_CERT
           value: /certs/localhost.crt
         - name: SSL_KEY
           value: /certs/localhost.key
         - name: MONGO_IP
-          value: mongo-nodeport-svc
+          value: my-mongodb.default.svc.cluster.local
         - name: DB_NAME
           value: desk
+        - name: DB_USER
+          value: reserver
+        - name: DB_PASSWORD
+          value: assets
         - name: API_PORT
           value: "6179"
+        - name: CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-connection-strings
+              key: desk_connection_string
