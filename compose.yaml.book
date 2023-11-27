@@ -11,4 +11,4 @@ services:
       DB_USER: "reserver"
       DB_PASSWORD: "assets"
       MONGO_IP: "mongo"
-      CONNECTION_STRING: mongodb://reserver:ass3ts@mongo:27017/book
+      CONNECTION_STRING: mongodb://reserver:assets@mongo:27017/book
