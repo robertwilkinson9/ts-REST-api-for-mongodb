@@ -15,6 +15,14 @@ echo endpoint_ip is $END_POINT_IP
 END_POINT_PORT=$(echo ${END_POINTS} | awk -F: '{print $2}')
 echo endpoint_port is $END_POINT_PORT
 
+VITE_TYPE=$TYPE
+
+if [ $TYPE == "carpark" ]
+then
+  VITE_TYPE="bay"
+fi
+echo VITE_TYPE is ${VITE_TYPE}
+
 cat << EOF > ${TYPE}-frontend.yaml
 ---
 apiVersion: v1
@@ -39,5 +47,5 @@ spec:
       - name: VITE_API_PORT
         value: "${END_POINT_PORT}"
       - name: VITE_TYPE
-        value: "${TYPE}"
+        value: "${VITE_TYPE}"
 EOF
