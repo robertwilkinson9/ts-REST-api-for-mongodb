@@ -28,10 +28,11 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTIO
 }
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
-const collection = process.env.DB_NAME || "test";
+const end_point_name = configData.ITEM_NAME || process.env.DB_NAME || "test";
+console.log(`END_POINT_NAME is ${end_point_name}`);
 const apiIP = process.env.API_IP || "localhost";
 
-const post_path = `/api/${collection}/`
+const post_path = `/api/${end_point_name}/`
 // POST sends OPTIONS first, so we set appropriate response headers and send success status.
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
