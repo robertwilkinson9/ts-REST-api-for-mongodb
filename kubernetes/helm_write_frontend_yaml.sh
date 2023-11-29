@@ -11,7 +11,7 @@ echo FE_PORT is $FE_PORT
 #END_POINTS=$(kubectl describe service/${TYPE}-backend-service | grep ^Endpoints: | awk '{print $NF}')
 #echo endpoints is $END_POINTS
 END_POINTS=$(kubectl describe service/ra-${TYPE} | grep ^Endpoints: | awk '{print $NF}')
-if [ $? == 0 ]; 
+if [ $? == 0 ]
 then
   echo endpoints is $END_POINTS
 
@@ -27,6 +27,14 @@ else
   END_POINT_PORT=$(kubectl describe service/ra-${TYPE} | grep ^Port: | awk -F/ '{print $1}' | awk '{print $NF}')
   echo endpoint_port is $END_POINT_PORT
 fi
+
+VITE_TYPE=$TYPE
+
+if [ $TYPE == "carpark" ]
+then
+  VITE_TYPE="bay"
+fi
+echo VITE_TYPE is ${VITE_TYPE}
 
 cat << EOF > ${TYPE}-frontend.yaml
 ---
@@ -52,5 +60,5 @@ spec:
       - name: VITE_API_PORT
         value: "${END_POINT_PORT}"
       - name: VITE_TYPE
-        value: "${TYPE}"
+        value: "${VITE_TYPE}"
 EOF
