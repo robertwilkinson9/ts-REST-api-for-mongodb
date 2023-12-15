@@ -8,7 +8,7 @@ services:
       SSL_CERT: "/certs/localhost.crt"
       SSL_KEY: "/certs/localhost.key"
       DB_NAME: "book"
-      DB_USER: "reserver"
-      DB_PASSWORD: "assets"
-      MONGO_IP: "mongo"
-      CONNECTION_STRING: mongodb://reserver:assets@mongo:27017/book
+      DB_USER: book1"
+      DB_PASSWORD: "1book"
+      MONGO_IP: "localhost"
+      CONNECTION_STRING: mongodb://book1:1book@localhost:27017/book
