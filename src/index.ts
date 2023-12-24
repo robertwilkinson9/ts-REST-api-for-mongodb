@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as https from 'https';
 import { MongoClient } from 'mongodb';
 
+import mongoose from 'mongoose';
+
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -16,64 +18,30 @@ const apiPort = process.env.API_PORT || configData.APIPORT;
 console.log(`api port is ${apiPort}`)
 
 console.log(`DB_NAME is ${process.env.DB_NAME}`);
-console.log(`DB_USER is ${process.env.DB_USER}`);
-console.log(`DB_PASSWORD is ${process.env.DB_PASSWORD}`);
-console.log(`MONGO_IP is ${process.env.MONGO_IP}`);
 console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
+console.log(`CONNECTION_STRING is ${process.env.CONNECTION_STRING}`);
 
-if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT)) {
-  console.log("Need to give path to SSL key and SSL certificate as environment variables");
+if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTION_STRING)) {
+  console.log("Need to give path to SSL key and SSL certificate and a connection string for mongoDB as environment variables");
   process.exit(1);
 }
 
 const mongoip = process.env.MONGO_IP || "127.0.0.1"
-console.log(`MONGO IP 2 is ${mongoip}`)
+const end_point_name = configData.ITEM_NAME || process.env.DB_NAME || "test";
+console.log(`END_POINT_NAME is ${end_point_name}`);
+const apiIP = process.env.API_IP || "localhost";
 
-// const collection = process.env.DB_NAME ? process.env.DB_NAME : "test";
-const collection = process.env.DB_NAME || "test";
-console.log(`collection is ${collection}`);
-
-const connection_string = `mongodb://${mongoip}:27017/${collection}`;
-console.log(`CONNECTION STRING IP is ${connection_string}`)
-
-const uri = `${connection_string}?retryWrites=true&writeConcern=majority`;
-
-var apiIP = process.env.API_IP || "localhost";
-console.log(`ApiIP is ${apiIP}`);
-
-const post_path = `/api/${collection}/`
-console.log("post_path is ")
-console.log( post_path)
+const post_path = `/api/${end_point_name}/`
+// POST sends OPTIONS first, so we set appropriate response headers and send success status.
 app.options(post_path, function(req, res, next){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
-  res.setHeader('Access-Control-Allow-Origin', ORIGIN);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-/*
-  res.header('Access-Control-Allow-Origin', ORIGIN);
-//  res.header('Access-Control-Allow-Origin', 'https://localhost');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-*/
+  res.set('Access-Control-Allow-Origin', ORIGIN);
+  res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
   res.sendStatus(200);
 });
-
-async function initDatabase() { 
-    try {
-        const client = new MongoClient(uri, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-
-        await client.connect();
-        return client;
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-}
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -85,17 +53,15 @@ const allowedOrigins = [
 ];
 
 const options: cors.CorsOptions = {origin: allowedOrigins};
-console.log("CORS OPTIONS are ");
-console.log(options);
 
 app.use(cors(options));
 
 app.use(function(req, res, next) {
+// add appropriate response headers for CORS
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
-  console.log(`USE ORIGIN is ${ORIGIN}`);
-  res.setHeader("Access-Control-Allow-Origin", ORIGIN);
-//  res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
-  res.setHeader('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set("Access-Control-Allow-Origin", ORIGIN);
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
 
   next();
 });
@@ -105,26 +71,19 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req: Request, res:Response) => {
+// add appropriate response headers for CORS
   const ORIGIN = req.headers.origin || "https://127.0.0.1";
-  console.log(`/ ORIGIN is ${ORIGIN}`);
-  res.setHeader("Access-Control-Allow-Origin", ORIGIN);
-//  res.setHeader('Access-Control-Allow-Origin', 'https://localhost');
-  res.setHeader('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set("Access-Control-Allow-Origin", ORIGIN);
+  res.set('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin')
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Access-Control-Allow-Origin');
   res.send('Hello World!')
 })
 
+const server = https.createServer({
+  cert: fs.readFileSync(process.env.SSL_CERT),
+  key: fs.readFileSync(process.env.SSL_KEY)
+}, app).listen(
+  apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
+);
+
 app.use('/api', itemRouter)
-
-var dbClient: MongoClient = null;
-var server: Server = null;
-
-initDatabase().then((client) => {
-    console.log('Database initialized');
-    dbClient = client;
-    server = https.createServer({
-        cert: fs.readFileSync(process.env.SSL_CERT),
-        key: fs.readFileSync(process.env.SSL_KEY)
-    }, app).listen(
-        apiPort, () => console.log(`Server listening on https://${apiIP}:${apiPort}`)
-    );
-});

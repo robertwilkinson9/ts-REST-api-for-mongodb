@@ -13,4 +13,4 @@ then
   ln -fs Dockerfile.fe${TYPE} Dockerfile
 fi
 
-docker compose --file compose.yaml.fe${TYPE} up
+docker-compose --file compose.yaml.fe${TYPE} up
