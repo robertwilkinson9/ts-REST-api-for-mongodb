@@ -1,6 +1,6 @@
 #!/bin/bash
 APIPORT=5179
-mongo < delete_item.js
+./run_mongo.sh
 
 curl --silent -X POST -H "Content-Type: application/json" --data @new.item http://localhost:${APIPORT}/api/item > /dev/null
 curl --silent -X GET -H "Content-Type: application/json" http://10.0.2.15:5179/api/items --output items.out

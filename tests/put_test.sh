@@ -1,6 +1,6 @@
 #!/bin/bash
 APIPORT=6177
-mongo --quiet < delete_test.js > /dev/null
+./run_mongo.sh
 
 curl --silent -X POST -H "Content-Type: application/json" --insecure --data @new.test.item.1 https://localhost:${APIPORT}/api/test > /dev/null
 curl --silent -X GET -H "Content-Type: application/json" --insecure https://localhost:${APIPORT}/api/all_tests --output tests.out

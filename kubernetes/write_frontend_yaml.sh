@@ -1,6 +1,7 @@
 #/bin/bash
 TYPE=$1
 PORT=$2
+CONFIG_DIR=../ts-ra-config
 BACKEND_IP=$(kubectl describe service/${TYPE}-backend-service | grep ^IP: | awk '{print $NF}')
 echo beip is $BACKEND_IP
 BACKEND_PORT=$(kubectl describe service/${TYPE}-backend-service | grep TargetPort: | awk '{print $2}' | awk -F/ '{print $1}')

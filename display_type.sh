@@ -1,7 +1,7 @@
 #!/bin/bash
 TYPE=$1
 
-CONFIG_PREFIX="../ts-reserve-assets/config/config."
+CONFIG_PREFIX="../ts-ra-config/config."
 CONFIG_FILE=$(echo ${CONFIG_PREFIX}${TYPE}.json)
 
 if [ -e $CONFIG_FILE ] ;

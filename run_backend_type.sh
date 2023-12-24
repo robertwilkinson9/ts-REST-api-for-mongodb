@@ -7,4 +7,5 @@ then
   ln -fs Dockerfile.${TYPE} Dockerfile
 fi
 
-docker compose --file compose.yaml.${TYPE} up
+#docker-compose --file compose.yaml.${TYPE} up
+docker compose --file compose.yaml.${TYPE} config

@@ -17,6 +17,7 @@ RUN dpkg -i /mongodb-org-mongos_4.4.19_amd64.deb
 RUN mkdir /certs
 ADD ./certs/ /certs
 RUN mkdir /src 
+RUN git clone https://github.com/robertwilkinson9/ts-ra-config.git /src/ts-ra-config
 RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
 RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /src/ts-REST-api-for-mongodb
 RUN mkdir /src/ts-REST-api-for-mongodb/config
