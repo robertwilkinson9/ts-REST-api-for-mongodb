@@ -7,6 +7,7 @@ ADD ./certs/ /certs
 COPY ./certs/localhost.crt /usr/local/share/ca-certificates/kubernetes.crt
 RUN update-ca-certificates
 RUN mkdir /src 
+RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
 RUN git clone https://github.com/robertwilkinson9/ts-ra-config.git /src/ts-ra-config
 RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /src/ts-REST-api-for-mongodb
 RUN mkdir /src/ts-REST-api-for-mongodb/config
