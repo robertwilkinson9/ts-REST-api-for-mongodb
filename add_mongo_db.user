@@ -11,3 +11,4 @@ db.createUser(
 )
 db.createUser( { user: 'book1', pwd: '1book', db: 'admin', roles: [ { role: 'dbOwner', db: 'book' }, { role: 'readWrite', db: 'book' }] } )
 db.createUser( { user: "book1", pwd: "1book", db: "admin", roles: [ { role: "dbOwner", db: "book" }, { role: "readWrite", db: "book" }] } )
+db.createUser( { user: "book1", pwd: "1book", roles: [ { role: "dbOwner", db: "book" }, { role: "readWrite", db: "book" }] } )
