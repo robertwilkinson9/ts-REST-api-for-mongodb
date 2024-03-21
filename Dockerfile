@@ -1,1 +1,1 @@
-Dockerfile.febook
+Dockerfile.book

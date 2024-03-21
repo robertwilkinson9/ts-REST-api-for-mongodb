@@ -1,14 +1,8 @@
 #/bin/bash
 TYPE=$1
-#BACKEND_IP=$(kubectl describe service/${TYPE}-backend-service | grep ^IP: | awk '{print $NF}')
-#echo beip is $BACKEND_IP
-#BACKEND_PORT=$(kubectl describe service/${TYPE}-backend-service | grep TargetPort: | awk '{print $2}' | awk -F/ '{print $1}')
-#echo beport is $BACKEND_PORT
 SRC_DIR="../../ts-reserve-assets/"
 FE_PORT=$(cat ${SRC_DIR}/package.json | jq --raw-output .config.${TYPE})
 echo FE_PORT is $FE_PORT
-#END_POINTS=$(kubectl describe service/${TYPE}-backend-service | grep ^Endpoints: | awk '{print $NF}')
-#echo endpoints is $END_POINTS
 END_POINTS=$(kubectl describe service/ra-${TYPE} | grep ^Endpoints: | awk '{print $NF}')
 if [ $? -eq 0 ]
 then

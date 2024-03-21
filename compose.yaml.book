@@ -11,4 +11,4 @@ services:
       DB_USER: book1"
       DB_PASSWORD: "1book"
       MONGO_IP: "localhost"
-      CONNECTION_STRING: mongodb://book1:1book@localhost:27017/book
+      CONNECTION_STRING: mongodb://book1:1book@127.0.0.1:27017/book

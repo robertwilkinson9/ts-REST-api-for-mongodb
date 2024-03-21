@@ -76,3 +76,14 @@ It is not possible for the TS code to resolve the symbol used by Kubernetes to i
 
 Some example yaml files are in the kubernetes directory alongside a script to write the appropriate frontend yaml file, our application can not see the ENV variables apart from those we prefix with VITE_ so we build the frontend yaml file here. It would be better to use the ENV variables, but ... 
 
+expose the frontend pod on minikube via
+
+┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
+└─$ kubectl expose pod book-frontend --port 5176 --name frontend --type NodePort
+service/frontend exposed
+
+and then we can see it here
+
+┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
+└─$ minikube service frontend --url --https
+https://192.168.49.2:32656
