@@ -1,0 +1,21 @@
+#!/bin/bash
+TYPE=$1
+echo TYPE is $TYPE
+
+MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
+cat << EOF > compose.yaml.${TYPE}
+services:
+  ${TYPE}_backend:
+    container_name: ${TYPE}_backend
+    build: .
+    ports:
+      - "6180:6180"
+    environment:
+      SSL_CERT: "/certs/localhost.crt"
+      SSL_KEY: "/certs/localhost.key"
+      DB_NAME: "${TYPE}"
+      DB_USER: "reserver"
+      DB_PASSWORD: "assets"
+      MONGO_IP: "${MONGO_IP}"
+      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:27017/${TYPE}
+EOF
