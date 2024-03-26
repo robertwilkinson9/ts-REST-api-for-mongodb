@@ -2,6 +2,8 @@
 TYPE=$1
 echo $TYPE
 
+./make yaml $TYPE
+
 if [ -e Dockerfile.${TYPE} ] ;
 then
   ln -fs Dockerfile.${TYPE} Dockerfile
