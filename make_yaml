@@ -2,7 +2,21 @@
 TYPE=$1
 echo TYPE is $TYPE
 
-MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
+X=$(which minikube)
+STATUS=$?
+echo STATUS is $STATUS
+if [ $STATUS == 0 ]
+then
+	echo HAVE MINIKUBE
+  MONGO_DB=$(minikube service mongodb --url | sed -e 's/^http:\/\///')
+  MONGO_IP=$(echo $MONGO_DB | sed -e 's/:.*$//') 
+  MONGO_PORT=$(echo $MONGO_DB | sed -e 's/^.*://') 
+else
+	echo NOMINIKUBE
+  MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
+  MONGO_PORT=27017
+fi
+
 cat << EOF > compose.yaml.${TYPE}
 services:
   ${TYPE}_backend:
@@ -17,5 +31,7 @@ services:
       DB_USER: "reserver"
       DB_PASSWORD: "assets"
       MONGO_IP: "${MONGO_IP}"
-      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:27017/${TYPE}
+      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}
 EOF
+#      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}?directConnection=true
+#      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:27017/${TYPE}
