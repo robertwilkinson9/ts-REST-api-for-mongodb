@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import * as fs from 'fs';
 import * as https from 'https';
-import { MongoClient } from 'mongodb';
+//import { MongoClient } from 'mongodb';
 
-import mongoose from 'mongoose';
+//import mongoose from 'mongoose';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -27,14 +27,15 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTIO
   process.exit(1);
 }
 
-const mongoip = process.env.MONGO_IP || "127.0.0.1"
+//const mongoip = process.env.MONGO_IP || "127.0.0.1"
 const end_point_name = configData.ITEM_NAME || process.env.DB_NAME || "test";
 console.log(`END_POINT_NAME is ${end_point_name}`);
 const apiIP = process.env.API_IP || "localhost";
 
 const post_path = `/api/${end_point_name}/`
 // POST sends OPTIONS first, so we set appropriate response headers and send success status.
-app.options(post_path, function(req, res, next){
+//app.options(post_path, function(req, res, next){
+app.options(post_path, function(req, res){
   const ORIGIN = req.headers.origin || 'https://127.0.0.1';
   console.log(`FOUND OPTION for ${post_path} and origin of ${ORIGIN}`);
   res.set('Access-Control-Allow-Origin', ORIGIN);
@@ -79,7 +80,8 @@ app.get('/', (req: Request, res:Response) => {
   res.send('Hello World!')
 })
 
-const server = https.createServer({
+//const server = https.createServer({
+https.createServer({
   cert: fs.readFileSync(process.env.SSL_CERT),
   key: fs.readFileSync(process.env.SSL_KEY)
 }, app).listen(
