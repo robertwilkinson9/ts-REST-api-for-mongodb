@@ -2,7 +2,7 @@
 TYPE=$1
 echo $TYPE
 
-./make yaml $TYPE
+./make_yaml $TYPE
 
 if [ -e Dockerfile.${TYPE} ] ;
 then
