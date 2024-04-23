@@ -7,23 +7,24 @@ STATUS=$?
 echo STATUS is $STATUS
 if [ $STATUS == 0 ]
 then
-	echo HAVE MINIKUBE
+  echo HAVE MINIKUBE
   MONGO_DB=$(minikube service mongodb --url | sed -e 's/^http:\/\///')
   MONGO_IP=$(echo $MONGO_DB | sed -e 's/:.*$//') 
   MONGO_PORT=$(echo $MONGO_DB | sed -e 's/^.*://') 
 else
-	echo NOMINIKUBE
+  echo NOMINIKUBE
   MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
   MONGO_PORT=27017
 fi
 
+APIPORT=$(cat config/config.json | jq --raw-output '.APIPORT')
 cat << EOF > compose.yaml.${TYPE}
 services:
   ${TYPE}_backend:
     container_name: ${TYPE}_backend
     build: .
     ports:
-      - "6180:6180"
+      - "${APIPORT}:${APIPORT}"
     environment:
       SSL_CERT: "/certs/localhost.crt"
       SSL_KEY: "/certs/localhost.key"
@@ -33,5 +34,3 @@ services:
       MONGO_IP: "${MONGO_IP}"
       CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}
 EOF
-#      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}?directConnection=true
-#      CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:27017/${TYPE}
