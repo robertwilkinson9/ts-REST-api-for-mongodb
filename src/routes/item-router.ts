@@ -10,11 +10,11 @@ import {getItemById} from '../controllers/get_item_by_id';
 
 export const itemRouter = express.Router()
 
-itemRouter.post('/' + configData.LCCOLLECTION, createItem)
-itemRouter.put('/' + configData.LCCOLLECTION + '/:id', updateItem)
-itemRouter.delete('/' + configData.LCCOLLECTION + '/:id', deleteItem)
-itemRouter.get('/' + configData.LCCOLLECTION + '/:id', getItemById)
-itemRouter.get('/' + configData.LCCOLLECTION + 's', getFilteredItems)
+itemRouter.post('/' + configData.COLLECTION, createItem)
+itemRouter.put('/' + configData.COLLECTION + '/:id', updateItem)
+itemRouter.delete('/' + configData.COLLECTION + '/:id', deleteItem)
+itemRouter.get('/' + configData.COLLECTION + '/:id', getItemById)
+itemRouter.get('/' + configData.COLLECTION + 's', getFilteredItems)
 if (configData.SHOW_ALL !== false) {
-  itemRouter.get('/all_' + configData.LCCOLLECTION + 's', getItems)
+  itemRouter.get('/all_' + configData.COLLECTION + 's', getItems)
 }
