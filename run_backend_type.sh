@@ -1,6 +1,10 @@
 #!/bin/bash
 TYPE=$1
 echo $TYPE
+if [ -z ${TYPE} ]
+then
+  TYPE=$(cat config/config.json | jq --raw-output '.COLLECTION')
+fi
 
 ./make_yaml $TYPE
 
