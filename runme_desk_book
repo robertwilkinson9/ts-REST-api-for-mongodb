@@ -3,7 +3,7 @@ CONFIG_PREFIX="../ts-ra-config/config."
 #echo CONFIG_PREFIX is $CONFIG_PREFIX
 TYPES=("desk" "book")
 #
-rsync -av ../certs .
+rsync -av /certs .
 #
 docker network ls | grep -q mongo-network
 NETWORK_EXISTS=$?

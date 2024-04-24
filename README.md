@@ -22,7 +22,7 @@ SSL
 
 SSL is used for the REST API and certificates and keys must be supplied e.g.
 
-<code>SSL_CERT=../certs/localhost.crt SSL_KEY=../certs/localhost.key npm run book</code>
+<code>SSL_CERT=/certs/localhost.crt SSL_KEY=/certs/localhost.key npm run book</code>
 
 DOCKER
 ------
