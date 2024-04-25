@@ -8,9 +8,6 @@ echo backend_address ${TYPE}
 cat compose.yaml.${TYPE}
 cd -
 
-if [ -e Dockerfile.${TYPE} ] ;
-then
-  ln -fs Dockerfile.fe${TYPE} Dockerfile
-fi
+sed -e "s/GENERIC/${TYPE}/" Dockerfile.fegeneric > Dockerfile
 
 docker-compose --file compose.yaml.fe${TYPE} up
