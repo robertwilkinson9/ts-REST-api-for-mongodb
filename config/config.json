@@ -1,7 +1,6 @@
 {
   "APIPORT": 6180,
-  "COLLECTION": "Book",
-  "LCCOLLECTION": "book",
+  "COLLECTION": "book",
   "ITEM_NAME": "book",
   "ITEM_LABEL": "title",
   "BUCKET_NAME": "author",
