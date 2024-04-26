@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
       - name: book-backend
-        image: robertwilkinsonwork299/reserve-assets-book-backend
+        image: book-backend:latest
+        imagePullPolicy: Never
         ports:
           - containerPort: 6180
         env:
