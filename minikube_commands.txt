@@ -1,0 +1,6 @@
+eval $(minikube docker-env)
+minikube image build -t book-backend .
+minikube image load docker.io/library/book-backend
+kubectl apply -f kubernetes/book-backend.yaml
+kubectl apply -f kubernetes/book-backend-service.yaml
+minikube service book-backend-service --url --https
