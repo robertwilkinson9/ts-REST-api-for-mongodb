@@ -1,0 +1,12 @@
+{
+  "booking_start": "2024-04-29T10:10:55.566Z",
+  "booking_end": "2024-04-29T11:00:00.458Z",
+  "expireAt": "2024-04-30T10:10:55.566Z",
+  "bucket": 0,
+  "testing_item_name": "f3",
+  "email": "b@b.b",
+  "fruit": "banana",
+  "aux_used": "used",
+  "aux_unused": "unused",
+  "testing_bucket": "first"
+}
