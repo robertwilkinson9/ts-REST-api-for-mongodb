@@ -12,9 +12,19 @@ then
   MONGO_IP=$(echo $MONGO_DB | sed -e 's/:.*$//') 
   MONGO_PORT=$(echo $MONGO_DB | sed -e 's/^.*://') 
 else
-  echo NOMINIKUBE
-  MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
-  MONGO_PORT=27017
+  Y=$(which k3s)
+  STATUS=$?
+  echo STATUS is $STATUS
+  if [ $STATUS == 0 ]
+  then
+    MONGO_IP_PORT=$(kubectl describe service/mongodb | grep ^Endpoints | awk '{print $2}')
+    MONGO_IP=$(echo $MONGO_IP_PORT | sed -e 's/:.*$//') 
+    MONGO_PORT=$(echo $MONGO_IP_PORT | sed -e 's/^.*://') 
+  else
+    echo NOMINIKUBE
+    MONGO_IP=$(docker inspect mongo | ./get_docker_ip_address)
+    MONGO_PORT=27017
+  fi
 fi
 
 APIPORT=$(cat config/config.json | jq --raw-output '.APIPORT')
