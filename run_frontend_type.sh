@@ -15,7 +15,30 @@ cd -
 CONFIG_DIR=../ts-ra-config
 CONFIG_FILE=$(echo ${CONFIG_DIR}/config.${TYPE}.json)
 COLLECTION=$(cat $CONFIG_FILE | jq --raw-output '.COLLECTION')
-API_IP=$(docker inspect ${COLLECTION}_backend | jq -r '.[].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress')
+
+X=$(which minikube)
+STATUS=$?
+echo STATUS is $STATUS
+if [ $STATUS == 0 ]
+then
+  echo HAVE MINIKUBE
+  API_IP_PORT=$(minikube service ${TYPE}-backend-service --url | sed -e 's/^http:\/\///')
+  API_IP=$(echo $API_IP_PORT | sed -e 's/:.*$//')
+  API_PORT=$(echo $API_IP_PORT | sed -e 's/^.*://')
+else
+  Y=$(which k3s)
+  STATUS=$?
+  echo STATUS is $STATUS
+  if [ $STATUS == 0 ]
+  then
+    API_IP_PORT=$(kubectl describe service/${TYPE}-backend-service | grep ^Endpoints | awk '{print $2}')
+    API_IP=$(echo $API_IP_PORT | sed -e 's/:.*$//')
+    API_PORT=$(echo $API_IP_PORT | sed -e 's/^.*://')
+  else
+    echo NOMINIKUBE
+    API_IP=$(docker inspect ${COLLECTION}_backend | jq -r '.[].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress')
+  fi
+fi
 API_PORT=$(cat $CONFIG_FILE | jq --raw-output '.APIPORT')
 echo CF is $CONFIG_FILE apiport is $API_PORT COLLECTION IS $COLLECTION API_IP IS $API_IP
 
