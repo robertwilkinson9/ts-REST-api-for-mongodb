@@ -95,10 +95,9 @@ moved to k3s and there
 1. Install mongodb, I used helm to do so.
    Connect via a client and set username/passwords on the databases e.g.
 <code>> use book
-book> db.createUser({user: "reserver", pwd: "ass3ts", roles: [ "readWrite"]})
-</code>
+book> db.createUser({user: "reserver", pwd: "ass3ts", roles: [ "readWrite"]})</code>
 
-2.create secrets file via
+2. Create secrets file via
 
 <code>$ cat write_secrets
 #!/bin/bash
