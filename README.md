@@ -78,9 +78,10 @@ Some example yaml files are in the kubernetes directory alongside a script to wr
 
 expose the frontend pod on minikube via
 
-┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
+<code>┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
 └─$ kubectl expose pod book-frontend --port 5176 --name frontend --type NodePort
 service/frontend exposed
+</code>
 
 and then we can see it here
 
