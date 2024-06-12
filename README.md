@@ -102,7 +102,6 @@ book> db.createUser({user: "reserver", pwd: "ass3ts", roles: [ "readWrite"]})
 
 <code>$ cat write_secrets
 #!/bin/bash
-
 cat <<EOF
 apiVersion: v1
 kind: Secret
@@ -126,7 +125,6 @@ then
         exit 1
 fi
 TYPE=$1
-
 echo -n "  ${TYPE}_connection_string: "
 echo $(echo "mongodb://reserver:ass3ts@mongodb.default.svc.cluster.local/${TYPE}" | base64 -w 100)
 #where 100 is a big enough number so it doesn't get linespaces occasionally inserted. I could mend it properly ...
@@ -147,6 +145,58 @@ is the output of running the above setup_secrets command)
 
 to give the desk application secrets with which to access the mongodb datastore.
 
+The book-backend service uses a docker container image, prepared earlier and uploaded to docker.io
+
+<code>
+┌──(kali㉿kali-rpi5)-[~/src/typescript/ts-REST-api-for-mongodb]
+└─$ cat book-backend.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: book-backend
+  name: book-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: book-backend
+    spec:
+      containers:
+      - name: book-backend
+        image: robertwilkinsonwork299/reserve-assets-book-backend
+        ports:
+          - containerPort: 6180
+        env:
+        - name: SSL_CERT
+          value: /certs/localhost.crt
+        - name: SSL_KEY
+          value: /certs/localhost.key
+        - name: MONGO_IP
+          value: mongodb.default.svc.cluster.local
+        - name: DB_NAME
+          value: book
+        - name: DB_USER
+          value: reserver
+        - name: DB_PASSWORD
+          value: assets
+        - name: API_PORT
+          value: "6180"
+        - name: CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-connection-strings
+              key: book_connection_string
+</code>
+
+<italic>I guess that the DB_ entries are redundant with the use of CONNECTION_STRING?</italic>
+
 On k3s, to expose the service, we can create a load balancer around the single node because the
 load balancer is given an external IP address.
 
@@ -154,7 +204,6 @@ load balancer is given an external IP address.
 #!/bin/bash
 NAME=$1
 PORT=$2
-#
 POD=$(kubectl get pods | grep $NAME | awk '{print $1}')
 k3s kubectl expose pod $POD --target-port $PORT --name $NAME --type=LoadBalancer
 </code>
