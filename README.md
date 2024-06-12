@@ -94,8 +94,7 @@ moved to k3s and there
 
 1. Install mongodb, I used helm to do so.
    Connect via a client and set username/passwords on the databases e.g.
-<code>
-> use book
+<code>> use book
 book> db.createUser({user: "reserver", pwd: "ass3ts", roles: [ "readWrite"]})
 </code>
 
@@ -196,7 +195,7 @@ spec:
               key: book_connection_string
 </code>
 
-<italic>I guess that the DB_ entries are redundant with the use of CONNECTION_STRING?</italic>
+*I guess that the MONGO_IP and DB_\* entries are now redundant with the use of CONNECTION_STRING?*
 
 On k3s, to expose the service, we can create a load balancer around the single node because the
 load balancer is given an external IP address.
