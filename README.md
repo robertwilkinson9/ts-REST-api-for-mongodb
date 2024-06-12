@@ -84,21 +84,23 @@ service/frontend exposed
 
 and then we can see it here
 
-┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
+<code> ┌──(kali㉿kali-raspberry-pi5)-[~/src/typescript/ts-REST-api-for-mongodb/kubernetes]
 └─$ minikube service frontend --url --https
 https://192.168.49.2:32656
+</code>
 
 moved to k3s and there
 
 1. Install mongodb, I used helm to do so.
    Connect via a client and set username/passwords on the databases e.g.
+<code>
 > use book
 book> db.createUser({user: "reserver", pwd: "ass3ts", roles: [ "readWrite"]})
+</code>
 
 2.create secrets file via
 
-<code>
-$ cat write_secrets
+<code>$ cat write_secrets
 #!/bin/bash
 
 cat <<EOF
@@ -116,8 +118,7 @@ EOF
 
 where setup_secrets is:
 
-<code>
-$ cat setup_secrets
+<code>$ cat setup_secrets
 #!/bin/bash
 if [ $# -ne 1 ]
 then
@@ -128,26 +129,20 @@ TYPE=$1
 
 echo -n "  ${TYPE}_connection_string: "
 echo $(echo "mongodb://reserver:ass3ts@mongodb.default.svc.cluster.local/${TYPE}" | base64 -w 100)
-# 100 is a big enough number so it doesn't get linespaces occasionally inserted. I could mend it properly ...
+#where 100 is a big enough number so it doesn't get linespaces occasionally inserted. I could mend it properly ...
 </code>
 
 running e.g.
 
-<code>
-./setup_secrets desk
-</code>
+<code>./setup_secrets desk</code>
 
 will write a YAML file to STDOUT which can be applied
 
 (e.g. via
 
-<code>
-kubectl apply -f secret_filename.yaml
-</code>
+<code>kubectl apply -f secret_filename.yaml</code>
 where
-<code>
-secret_filename.yaml
-</code>
+<code>secret_filename.yaml</code>
 is the output of running the above setup_secrets command)
 
 to give the desk application secrets with which to access the mongodb datastore.
@@ -155,8 +150,7 @@ to give the desk application secrets with which to access the mongodb datastore.
 On k3s, to expose the service, we can create a load balancer around the single node because the
 load balancer is given an external IP address.
 
-<code>
-$ cat kubernetes/make_lb.sh
+<code>$ cat kubernetes/make_lb.sh
 #!/bin/bash
 NAME=$1
 PORT=$2
@@ -168,8 +162,7 @@ k3s kubectl expose pod $POD --target-port $PORT --name $NAME --type=LoadBalancer
 this load balancer can be accessed by the front-end which needs to talk to the backend, the front-end
 can be similarly exposed to allow network access.
 
-<code>
-$ kubectl describe service/book-backend | grep -A2 ^LoadBalancer | grep -v unset
+<code>$ kubectl describe service/book-backend | grep -A2 ^LoadBalancer | grep -v unset
 LoadBalancer Ingress:     192.168.1.173
 TargetPort:               6180/TCP
 </code>
