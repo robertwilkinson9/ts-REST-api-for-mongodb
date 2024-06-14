@@ -203,3 +203,34 @@ TargetPort:               6180/TCP
 
 Currently both public end-points must be visited with a browser and cerficates accepted manually
 before use of the services, but this is solely a consequence of self-signed certification for SSL.
+
+The helm charts in kubernetes/helm work unchanged on k3s
+
+<code>┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ helm install desk desk</code>
+
+Initially failed with DB connectivity issues. This was expected since the
+database user/password had not been set.
+
+<code>┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ kubectl describe service/mongodb | grep ^Endpoints | awk '{print $2}'
+┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ mongo --host 10.42.0.16:27017</code>
+
+and then inside mongodb set the username and password as before, and then redeploy via
+
+<code>┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ helm uninstall desk
+──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ helm install desk desk</code>
+
+This time there are no connectivity errors in the service logs. The desk backend can be tested via:
+<code>┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ kubectl describe service/desk | grep ^Endp | awk '{print $NF}'
+10.42.0.30:6179
+
+┌──(kali㉿kali-rpi5)-[~/…/typescript/ts-REST-api-for-mongodb/kubernetes/helm]
+└─$ curl --insecure https://10.42.0.30:6179
+Hello World!</code>
+
+It's alive!
