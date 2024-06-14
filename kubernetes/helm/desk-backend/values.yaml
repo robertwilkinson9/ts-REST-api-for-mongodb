@@ -1,11 +1,11 @@
-# Default values for desk.
+# Default values for desk-backend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: robertwilkinsonwork299/reserve-assets-desk-frontend
+  repository: robertwilkinsonwork299/reserve-assets-desk-backend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -41,7 +41,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: "5174"
+  port: "6179"
 
 ingress:
   enabled: "false"
@@ -97,7 +97,7 @@ tolerations: []
 
 affinity: {}
 
-containerPort: "5174"
+containerPort: "6179"
 
-apiPort: "5174"
+apiPort: "6179"
 dbName: "desk"

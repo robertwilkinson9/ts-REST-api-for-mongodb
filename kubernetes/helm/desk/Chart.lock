@@ -1,6 +1,6 @@
 dependencies:
-- name: mongodb
+- name: desk-backend
   repository: ""
-  version: ~7.0.11
-digest: sha256:040fbf9853f78499b7d3fded724f0b1fe283ccce0066440c48611db5cdbe78b5
-generated: "2024-06-14T10:06:16.616775337Z"
+  version: 1.18.0
+digest: sha256:46580d1dffe0b5ff283f670eaaa4c668c53c4231073e923065333df1663d154f
+generated: "2024-06-14T11:21:22.716629369Z"

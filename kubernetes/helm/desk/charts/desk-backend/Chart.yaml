@@ -1,0 +1,156 @@
+type: application
+apiVersion: v2
+name: desk-backend
+description: A Helm chart for desk-backend
+version: 1.18.0
+---
+# Source: desk-backend/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: desk-backend
+  labels:
+    helm.sh/chart: desk-backend-0.2.0
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+    app.kubernetes.io/version: "1.18.0"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: desk-backend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: desk-backend
+  labels:
+    helm.sh/chart: desk-backend-0.2.0
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+    app.kubernetes.io/version: "1.18.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  ports:
+    - port: 6179
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+---
+# Source: desk-backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desk-backend
+  labels:
+    helm.sh/chart: desk-backend-0.2.0
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+    app.kubernetes.io/version: "1.18.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: desk-backend
+      app.kubernetes.io/instance: desk-backend
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: desk-backend-0.2.0
+        app.kubernetes.io/name: desk-backend
+        app.kubernetes.io/instance: desk-backend
+        app.kubernetes.io/version: "1.18.0"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: desk-backend
+      securityContext:
+        {}
+      containers:
+        - name: desk-backend
+          securityContext:
+            {}
+          image: "robertwilkinsonwork299/reserve-assets-desk-backend"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 6179
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /
+              port: http
+          env:
+            - name: SSL_CERT
+              value: /certs/localhost.crt
+            - name: SSL_KEY
+              value: /certs/localhost.key
+            - name: API_PORT
+              value: "6179"
+            - name: DB_NAME
+              value: "desk"
+            - name: CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-connection-strings
+                  key: desk_connection_string
+          resources:
+            {}
+---
+# Source: desk-backend/templates/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: desk-backend
+  labels:
+    helm.sh/chart: desk-backend-0.2.0
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+    app.kubernetes.io/version: "1.18.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: desk-backend
+  minReplicas: 1
+  maxReplicas: 100
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+---
+# Source: desk-backend/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: desk-backend
+  labels:
+    helm.sh/chart: desk-backend-0.2.0
+    app.kubernetes.io/name: desk-backend
+    app.kubernetes.io/instance: desk-backend
+    app.kubernetes.io/version: "1.18.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  rules:
+    - host: "chart-example.local"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: desk-backend
+                port:
+                  number: 6179
+

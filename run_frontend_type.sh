@@ -31,7 +31,7 @@ else
   echo STATUS is $STATUS
   if [ $STATUS == 0 ]
   then
-    API_IP_PORT=$(kubectl describe service/${TYPE}-backend-service | grep ^Endpoints | awk '{print $2}')
+    API_IP_PORT=$(kubectl describe service/${TYPE}-backend | grep ^Endpoints | awk '{print $2}')
     API_IP=$(echo $API_IP_PORT | sed -e 's/:.*$//')
     API_PORT=$(echo $API_IP_PORT | sed -e 's/^.*://')
   else
