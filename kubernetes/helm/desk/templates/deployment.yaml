@@ -1,3 +1,4 @@
+#kubectl describe service/desk-backend | grep ^End | awk '{print $NF}'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,15 +56,12 @@ spec:
               value: /certs/localhost.crt
             - name: SSL_KEY
               value: /certs/localhost.key
-            - name: API_PORT
-              value: "{{ .Values.apiPort }}"
-            - name: DB_NAME
-              value: "{{ .Values.dbName }}"
-            - name: CONNECTION_STRING
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-connection-strings
-                  key: desk_connection_string
+            - name: VITE_API_IP
+              value: "10.42.0.31"
+            - name: VITE_API_PORT
+              value: "6179"
+            - name: VITE_TYPE
+              value: "book"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
