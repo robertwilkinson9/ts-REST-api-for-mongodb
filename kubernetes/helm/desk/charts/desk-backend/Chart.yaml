@@ -2,7 +2,7 @@ type: application
 apiVersion: v2
 name: desk-backend
 description: A Helm chart for desk-backend
-version: 1.18.0
+version: 1.19.0
 ---
 # Source: desk-backend/templates/serviceaccount.yaml
 apiVersion: v1

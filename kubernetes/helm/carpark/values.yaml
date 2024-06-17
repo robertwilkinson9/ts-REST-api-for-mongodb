@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: robertwilkinsonwork299/reserve-assets-carpark-backend
+  repository: robertwilkinsonwork299/reserve-assets-carpark-frontend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -40,8 +40,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
-  port: "6178"
+  type: LoadBalancer
+  port: "5175"
 
 ingress:
   enabled: "false"
@@ -97,7 +97,7 @@ tolerations: []
 
 affinity: {}
 
-containerPort: "6178"
+containerPort: "5175"
 
-apiPort: "6178"
+apiPort: "5175"
 dbName: "carpark"
