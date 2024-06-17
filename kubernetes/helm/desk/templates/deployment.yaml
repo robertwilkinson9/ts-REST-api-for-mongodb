@@ -57,9 +57,9 @@ spec:
             - name: SSL_KEY
               value: /certs/localhost.key
             - name: VITE_API_IP
-              value: "10.42.0.31"
+              value: "192.168.1.173"
             - name: VITE_API_PORT
-              value: "6179"
+              value: "6174"
             - name: VITE_TYPE
               value: "book"
           resources:
