@@ -40,8 +40,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
-  port: "6179"
+  type: LoadBalancer
+  port: "6174"
 
 ingress:
   enabled: "false"
@@ -97,7 +97,7 @@ tolerations: []
 
 affinity: {}
 
-containerPort: "6179"
+containerPort: "6174"
 
-apiPort: "6179"
+apiPort: "6174"
 dbName: "desk"
