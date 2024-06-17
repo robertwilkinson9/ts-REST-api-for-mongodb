@@ -23,7 +23,9 @@ version: 0.2.0
 # It is recommended to use it with quotes.
 appVersion: "1.19.0"
 
+#  version: 1.19.0
 dependencies:
 - name: desk-backend
-  version: 1.19.0
+  repository: "file://../desk-backend"
+  version: 0.2.0
   tag: latest
