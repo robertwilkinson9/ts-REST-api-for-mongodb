@@ -99,5 +99,5 @@ affinity: {}
 
 containerPort: "5176"
 
-apiPort: "5176"
+apiPort: "6176"
 dbName: "book"

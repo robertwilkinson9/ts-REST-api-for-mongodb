@@ -25,5 +25,6 @@ appVersion: "1.19.0"
 
 dependencies:
 - name: book-backend
-  version: 1.19.0
+  repository: "file://../book-backend"
+  version: 0.2.0
   tag: latest
