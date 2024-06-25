@@ -1,0 +1,6 @@
+dependencies:
+- name: book-backend
+  repository: file://../book-backend
+  version: 0.2.0
+digest: sha256:d0e8cc0cd834db8ab6c1c6303542a2867a90ad5066b13a0af131fab3ff839f1d
+generated: "2024-06-17T14:29:08.720657599Z"
