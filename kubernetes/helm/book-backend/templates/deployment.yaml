@@ -57,8 +57,6 @@ spec:
               value: /certs/localhost.key
             - name: API_PORT
               value: "{{ .Values.apiPort }}"
-            - name: DB_NAME
-              value: "{{ .Values.dbName }}"
             - name: CONNECTION_STRING
               valueFrom:
                 secretKeyRef:

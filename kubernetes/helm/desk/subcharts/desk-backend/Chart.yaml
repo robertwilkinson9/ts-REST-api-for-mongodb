@@ -94,8 +94,6 @@ spec:
               value: /certs/localhost.key
             - name: API_PORT
               value: "6174"
-            - name: DB_NAME
-              value: "desk"
             - name: CONNECTION_STRING
               valueFrom:
                 secretKeyRef:

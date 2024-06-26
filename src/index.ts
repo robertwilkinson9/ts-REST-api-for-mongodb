@@ -1,23 +1,12 @@
 import express, { Request, Response } from "express";
 import * as fs from 'fs';
 import * as https from 'https';
-//import { MongoClient } from 'mongodb';
-
-//import mongoose from 'mongoose';
-
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import { db } from "./db/index";
 import { itemRouter } from './routes/item-router';
 
-import configData from "../config/config.json"
-
-const app = express()
-const apiPort = process.env.API_PORT || configData.APIPORT;
-console.log(`api port is ${apiPort}`)
-
-console.log(`DB_NAME is ${process.env.DB_NAME}`);
 console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
 console.log(`CONNECTION_STRING is ${process.env.CONNECTION_STRING}`);
@@ -27,8 +16,13 @@ if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTIO
   process.exit(1);
 }
 
-//const mongoip = process.env.MONGO_IP || "127.0.0.1"
-const end_point_name = configData.ITEM_NAME || process.env.DB_NAME || "test";
+import configData from "../config/config.json"
+
+const app = express()
+const apiPort = process.env.API_PORT || configData.APIPORT;
+console.log(`api port is ${apiPort}`)
+
+const end_point_name = configData.ITEM_NAME || "test";
 console.log(`END_POINT_NAME is ${end_point_name}`);
 const apiIP = process.env.API_IP || "localhost";
 

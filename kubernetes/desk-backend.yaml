@@ -28,12 +28,6 @@ spec:
           value: /certs/localhost.key
         - name: MONGO_IP
           value: my-mongodb.default.svc.cluster.local
-        - name: DB_NAME
-          value: desk
-        - name: DB_USER
-          value: reserver
-        - name: DB_PASSWORD
-          value: assets
         - name: API_PORT
           value: "6179"
         - name: CONNECTION_STRING
