@@ -163,8 +163,6 @@ spec:
           value: /certs/localhost.crt
         - name: SSL_KEY
           value: /certs/localhost.key
-        - name: MONGO_IP
-          value: mongodb.default.svc.cluster.local
         - name: API_PORT
           value: "6180"
         - name: CONNECTION_STRING
@@ -173,8 +171,6 @@ spec:
               name: mongodb-connection-strings
               key: book_connection_string
 </code>
-
-*I guess that the MONGO_IP and DB_\* entries are now redundant with the use of CONNECTION_STRING?*
 
 On k3s, to expose the service, we can create a load balancer around the single node because the
 load balancer is given an external IP address.

@@ -26,8 +26,6 @@ spec:
           value: /certs/localhost.crt
         - name: SSL_KEY
           value: /certs/localhost.key
-        - name: MONGO_IP
-          value: mongodb.default.svc.cluster.local
         - name: API_PORT
           value: "6180"
         - name: CONNECTION_STRING
