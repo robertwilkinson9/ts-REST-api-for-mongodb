@@ -20,7 +20,7 @@ RUN git clone https://github.com/robertwilkinson9/ts-ra-config.git /src/ts-ra-co
 RUN git clone https://github.com/robertwilkinson9/ts-REST-api-for-mongodb.git /src/ts-REST-api-for-mongodb
 WORKDIR /src/ts-REST-api-for-mongodb
 RUN npm install
-CMD ["npm", "run", "${TYPE}"]
+CMD ["npm", "run", "generic", "${TYPE}"]
 EOF
 
 ./make_yaml $TYPE

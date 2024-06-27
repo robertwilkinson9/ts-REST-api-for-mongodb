@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "npx tsx src/index.ts",
+    "filecopy": "func() { /usr/bin/cp ../ts-ra-config/config.\"$1\".json config/config.json} ; func",
+    "generic": "func() { /usr/bin/cp ../ts-ra-config/config.\"$1\".json config/config.json && SSL_CERT=${SSL_CERT:=/certs/localhost.crt} SSL_KEY=${SSL_KEY:=/certs/localhost.key} npx tsx src/index.ts; } ; func",
     "book": "cp ../ts-ra-config/config.book.json config/config.json && SSL_CERT=${SSL_CERT:=/certs/localhost.crt} SSL_KEY=${SSL_KEY:=/certs/localhost.key} npx tsx src/index.ts",
     "desk": "cp ../ts-ra-config/config.desk.json config/config.json && SSL_CERT=${SSL_CERT:=/certs/localhost.crt} SSL_KEY=${SSL_KEY:=/certs/localhost.key} npx tsx src/index.ts",
     "carpark": "cp ../ts-ra-config/config.carpark.json config/config.json && SSL_CERT=${SSL_CERT:=/certs/localhost.crt} SSL_KEY=${SSL_KEY:=/certs/localhost.key} npx tsx src/index.ts",
