@@ -22,7 +22,6 @@ WORKDIR /src/ts-REST-api-for-mongodb
 RUN npm install
 CMD ["npm", "run", "${TYPE}"]
 EOF
-#RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
 
 ./make_yaml $TYPE
 docker-compose --file compose.yaml.${TYPE} up
