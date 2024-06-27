@@ -6,7 +6,8 @@ replicaCount: 1
 
 image:
   repository: robertwilkinsonwork299/reserve-assets-desk-backend
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
+  #pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
