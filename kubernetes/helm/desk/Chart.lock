@@ -1,6 +1,0 @@
-dependencies:
-- name: desk-backend
-  repository: file://../desk-backend
-  version: 0.2.0
-digest: sha256:164c20d0c09e9ab3698cf15f9da48893a98eb2d25d79857cf6e400e00830caff
-generated: "2024-06-17T13:23:43.702671627Z"
