@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: carpark-backend
+  name: carpark-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: carpark-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: carpark-backend
+    spec:
+      containers:
+      - name: carpark-backend
+        image: robertwilkinsonwork299/reserve-assets-carpark-backend
+        ports:
+          - containerPort: 6180
+        env:
+        - name: SSL_CERT
+          value: /certs/localhost.crt
+        - name: SSL_KEY
+          value: /certs/localhost.key
+        - name: API_PORT
+          value: "6180"
+        - name: CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-connection-strings
+              key: carpark_connection_string
