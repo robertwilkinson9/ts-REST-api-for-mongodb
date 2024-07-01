@@ -54,7 +54,7 @@ fi
 
 # ARG API_IP
 # ENV API_IP ${API_IP}
-cat << EOF > Dockerfile
+cat << EOFH > Dockerfile
 FROM node:latest
 
 ARG SSL_CERT
@@ -63,7 +63,17 @@ ARG SSL_KEY
 ENV SSL_KEY ${SSL_KEY}
 ARG API_PORT
 ENV API_PORT ${API_PORT}
+EOFH
 
+if [ ! -z ${API_IP} ]
+then
+  cat << EOFA >> Dockerfile
+ARG API_IP
+ENV API_IP ${API_IP}
+EOFA
+fi
+
+cat << EOFT >> Dockerfile
 RUN apt update
 RUN apt install -y git jq
 RUN mkdir /certs
@@ -77,6 +87,6 @@ RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-
 WORKDIR /src/ts-reserve-assets
 RUN npm install
 CMD ["npm", "run", "generic", "${TYPE}"]
-EOF
+EOFT
 
 docker-compose --file compose.yaml.fe${TYPE} up
