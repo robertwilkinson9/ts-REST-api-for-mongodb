@@ -76,7 +76,7 @@ RUN git clone https://github.com/robertwilkinson9/ts-ra-config.git /src/ts-ra-co
 RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-reserve-assets
 WORKDIR /src/ts-reserve-assets
 RUN npm install
-CMD ["npm", "run", "${TYPE}"]
+CMD ["npm", "run", "generic", "${TYPE}"]
 EOF
 
 docker-compose --file compose.yaml.fe${TYPE} up
