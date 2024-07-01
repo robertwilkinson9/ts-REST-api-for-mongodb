@@ -52,6 +52,8 @@ then
   SSL_KEY=/certs/localhost.key
 fi
 
+# ARG API_IP
+# ENV API_IP ${API_IP}
 cat << EOF > Dockerfile
 FROM node:latest
 
@@ -59,13 +61,11 @@ ARG SSL_CERT
 ENV SSL_CERT ${SSL_CERT}
 ARG SSL_KEY
 ENV SSL_KEY ${SSL_KEY}
-ARG API_IP
-ENV API_IP ${API_IP}
 ARG API_PORT
 ENV API_PORT ${API_PORT}
 
 RUN apt update
-RUN apt install -y git
+RUN apt install -y git jq
 RUN mkdir /certs
 ADD ./certs/ /certs
 COPY ./certs/localhost.crt /usr/local/share/ca-certificates/kubernetes.crt
