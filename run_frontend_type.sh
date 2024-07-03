@@ -42,6 +42,11 @@ fi
 API_PORT=$(cat $CONFIG_FILE | jq --raw-output '.APIPORT')
 echo CF is $CONFIG_FILE apiport is $API_PORT COLLECTION IS $COLLECTION API_IP IS $API_IP
 
+if [ -z ${API_IP} ]
+then
+  API_IP="127.0.0.1"
+fi
+
 if [ -z ${SSL_CERT} ]
 then
   SSL_CERT=/certs/localhost.crt
@@ -87,6 +92,7 @@ RUN git clone https://github.com/robertwilkinson9/ts-reserve-assets.git /src/ts-
 WORKDIR /src/ts-reserve-assets
 RUN npm install
 CMD ["npm", "run", "generic", "${TYPE}"]
+#CMD [ "bash", "-c", "generic() { /usr/bin/mkdir -p ./config && /usr/bin/cp -f $npm_package_config_directory/config.$1.json config/config.json && sleep 5 && vite --port ${API_PORT} --host $(hostname -I | awk '{print $1}') } ; generic ${TYPE} ; " ]
 EOFT
 
 docker-compose --file compose.yaml.fe${TYPE} up
