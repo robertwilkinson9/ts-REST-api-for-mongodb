@@ -25,6 +25,7 @@ console.log(`api port is ${apiPort}`)
 const end_point_name = configData.ITEM_NAME || "test";
 console.log(`END_POINT_NAME is ${end_point_name}`);
 const apiIP = process.env.API_IP || "localhost";
+console.log(`api ip is ${apiIP}`)
 
 const post_path = `/api/${end_point_name}/`
 // POST sends OPTIONS first, so we set appropriate response headers and send success status.
