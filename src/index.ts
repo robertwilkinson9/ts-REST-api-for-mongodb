@@ -27,8 +27,8 @@ console.log(`api port is ${apiPort}`)
 const end_point_name = configData.ITEM_NAME || "test";
 console.log(`END_POINT_NAME is ${end_point_name}`);
 
-//docker inspect 4c1 | jq --raw-output '.[0].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress'
-const apiIP = process.env.API_IP || "localhost";
+DIP=$(docker inspect ${end_point_name}_backend | jq --raw-output '.[0].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress')
+const apiIP = process.env.API_IP || $DIP || "localhost";
 console.log(`api ip is ${apiIP}`)
 
 const post_path = `/api/${end_point_name}/`
