@@ -10,6 +10,8 @@ import { itemRouter } from './routes/item-router';
 console.log(`SSL_CERT is ${process.env.SSL_CERT}`);
 console.log(`SSL_KEY is ${process.env.SSL_KEY}`);
 console.log(`CONNECTION_STRING is ${process.env.CONNECTION_STRING}`);
+console.log(`API IP is ${process.env.API_IP}`)
+console.log(`API PORT is ${process.env.API_PORT}`)
 
 if ((!process.env.SSL_KEY) || (!process.env.SSL_CERT) || (!process.env.CONNECTION_STRING)) {
   console.log("Need to give path to SSL key and SSL certificate and a connection string for mongoDB as environment variables");
@@ -24,6 +26,8 @@ console.log(`api port is ${apiPort}`)
 
 const end_point_name = configData.ITEM_NAME || "test";
 console.log(`END_POINT_NAME is ${end_point_name}`);
+
+//docker inspect 4c1 | jq --raw-output '.[0].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress'
 const apiIP = process.env.API_IP || "localhost";
 console.log(`api ip is ${apiIP}`)
 
