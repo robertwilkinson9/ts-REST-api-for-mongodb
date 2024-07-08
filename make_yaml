@@ -15,7 +15,7 @@ services:
       SSL_KEY: "/certs/localhost.key"
 EOF
 
-echo "conn striung is ${CONNECTION_STRING}"
+echo "conn string is ${CONNECTION_STRING}"
 if [ ! -z $CONNECTION_STRING ]
 then
 echo "have conn string is ${CONNECTION_STRING}"
@@ -54,3 +54,12 @@ services:
       CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}
 EOF3
 fi
+
+DIP=$(docker inspect ${end_point_name}_backend | jq --raw-output '.[0].NetworkSettings.Networks."ts-rest-api-for-mongodb_default".IPAddress');
+echo `docker ip is ${DIP}"
+if [ ! -z $DIP ]
+then
+echo "have dip string is ${DIP}"
+cat << EOF4 >> compose.yaml.${TYPE}
+      API_IP: ${DIP}
+EOF4
