@@ -1,5 +1,6 @@
 {
-  "APIPORT": 6180,
+  "APIPORT": 6176,
+  "FEPORT": 5176,
   "COLLECTION": "book",
   "ITEM_NAME": "book",
   "ITEM_LABEL": "title",
@@ -30,6 +31,27 @@
         "Nineteen Eighty-Four",
         "The Road to Wigan Pier"
       ]
+    }
+  ],
+  "FORM_DATA":
+  [
+    {
+      "label": "interesting Book ZERO",
+      "helper_text": "We'll never share your Book ZERO data.",
+      "email_helper_text": "We'll never share your Book ZERO email.",
+      "email_placeholder": "benter Email address"
+    },
+    {
+      "label": "interesting Book ONE",
+      "helper_text": "We'll never share your Book ONE data.",
+      "email_helper_text": "We'll never share your Book ONE email.",
+      "email_placeholder": "center Email address"
+    },
+    {
+      "label": "interesting Book TWO",
+      "helper_text": "We'll never share your Book TWO data.",
+      "email_helper_text": "We'll never share your Book TWO email.",
+      "email_placeholder": "denter Email address"
     }
   ],
   "SCHEMA": {
