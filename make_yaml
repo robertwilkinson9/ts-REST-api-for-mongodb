@@ -3,8 +3,10 @@ TYPE=$1
 echo TYPE is $TYPE
 
 APIPORT=$(cat config/config.json | jq --raw-output '.APIPORT')
-cat << EOF > compose.yaml.${TYPE}
+cat << EOF0 > compose.yaml.${TYPE}
 services:
+EOF0
+cat << EOF >> compose.yaml.${TYPE}
   ${TYPE}_backend:
     container_name: ${TYPE}_backend
     build: .
@@ -49,8 +51,7 @@ else
   fi
 fi
 
-cat << EOF3 > compose.yaml.${TYPE}
-services:
+cat << EOF3 >> compose.yaml.${TYPE}
       CONNECTION_STRING: mongodb://reserver:assets@${MONGO_IP}:${MONGO_PORT}/${TYPE}
 EOF3
 fi
